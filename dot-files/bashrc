@@ -42,3 +42,7 @@ elif [ "$(uname -o)"  == "Cygwin" ]; then # {
    alias c:='cd /cygdrive/c'
 
 fi # }
+
+# Alias {
+alias ls='ls --color=auto'
+# }
