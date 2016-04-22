@@ -5,6 +5,8 @@ set -o vi
 
 export EDITOR=vim
 
+PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
+
 
 if   [ "$(uname)" == "Darwin" ]; then # {
 
@@ -45,4 +47,5 @@ fi # }
 
 # Alias {
 alias ls='ls --color=auto'
+alias info='info --vi-keys'
 # }
