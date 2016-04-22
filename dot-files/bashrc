@@ -7,6 +7,10 @@ export EDITOR=vim
 
 PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
 
+if [ -d ~/scripts-and-utilities ]; then # { 
+  export PATH=~/scripts-and-utilities:$PATH
+fi # }
+
 
 if   [ "$(uname)" == "Darwin" ]; then # {
 
