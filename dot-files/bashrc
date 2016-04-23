@@ -11,6 +11,15 @@ if [ -d ~/scripts-and-utilities ]; then # {
   export PATH=~/scripts-and-utilities:$PATH
 fi # }
 
+# Ignore case of files in shell {
+#   http://unix.stackexchange.com/a/48773/6479
+shopt -s nocaseglob
+# same thing in
+#   yash:
+#     set +o case-glob
+#   zsh:
+#     unsetopt CASE_GLOB
+# }
 
 if   [ "$(uname)" == "Darwin" ]; then # {
 
