@@ -65,7 +65,7 @@ alias info='info --vi-keys'
 # Functions {
 
 function fb() { # http://unix.stackexchange.com/questions/278732/is-there-a-standard-abbreviation-for-find-name-foo-or-do-i-need-a-function
-  find . -name "$1"
+  find . -iname "$1"
 }
 
 # }
