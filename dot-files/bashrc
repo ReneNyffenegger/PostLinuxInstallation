@@ -21,6 +21,13 @@ shopt -s nocaseglob
 #     unsetopt CASE_GLOB
 # }
 
+# { History
+
+export HISTIGNORE='*TQ84*'
+export HISTCONTROL=ignoreboth
+
+# }
+
 if   [ "$(uname)" == "Darwin" ]; then # {
 
     # Mac OS
@@ -57,6 +64,7 @@ elif [ "$(uname -o)"  == "Cygwin" ]; then # {
    alias c:='cd /cygdrive/c'
 
 fi # }
+
 
 # Alias {
 alias ls='ls --color=auto'
