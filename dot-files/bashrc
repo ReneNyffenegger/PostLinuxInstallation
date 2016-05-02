@@ -69,6 +69,7 @@ fi # }
 # Alias {
 alias ls='ls --color=auto'
 alias info='info --vi-keys'
+alias gitp=". gitp.sh"
 # }
 # Functions {
 
