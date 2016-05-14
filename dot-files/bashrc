@@ -3,7 +3,10 @@
 
 set -o vi
 
+# Environment variables {
 export EDITOR=vim
+export github_root=~/github/github/
+# }
 
 PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
 
