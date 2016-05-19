@@ -76,6 +76,8 @@ alias gitp=". gitp.sh"
 alias yt2mp3='youtube-dl --extract-audio --audio-format mp3 $1'
 alias yt2mp4='youtube-dl --merge-output-format mp4 $1'
 alias cdvimf='cd ~/.vim'
+alias cdnot='cd $github_root/notes/notes'
+alias cdhyd='cd $github_root/Hydroplattentheorie'
 # }
 # Functions {
 
