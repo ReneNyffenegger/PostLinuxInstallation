@@ -78,7 +78,6 @@ alias yt2mp4='youtube-dl --merge-output-format mp4 $1'
 alias cdvimf='cd ~/.vim'
 alias cdnot='cd $github_root/notes/notes'
 alias cdhyd='cd $github_root/Hydroplattentheorie'
-alias op=xdg-open
 # }
 # Functions {
 
