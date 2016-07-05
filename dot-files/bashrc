@@ -86,5 +86,17 @@ function fb() { # http://unix.stackexchange.com/questions/278732/is-there-a-stan
   find . -iname "$1"
 }
 
+function mdcd() { # mkdir and cd into it
+  dir=$1
+  
+  if [ -e "$dir" ]; then
+    echo "File or directory $dir already exists";
+    exit -1
+  fi
+  
+  mkdir "$dir"
+  cd    "$dir"
+}
+
 # }
 
