@@ -4,6 +4,7 @@
 set -o vi
 
 # Environment variables {
+export git_work_dir=~/localgit
 export EDITOR=vim
 export github_root=~/github/github/
 export ldp_dir=/home/rene/LDP
@@ -13,6 +14,9 @@ PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
 
 if [ -d ~/github/lib/scripts-and-utilities ]; then # { 
   export PATH=~/github/lib/scripts-and-utilities:$PATH
+fi # }
+if [ -d ~/localgit/scripts ]; then # {
+  export PATH=~/localgit/scripts:$PATH
 fi # }
 
 # Ignore case of files in shell {
