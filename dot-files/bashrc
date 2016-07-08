@@ -11,8 +11,8 @@ export ldp_dir=/home/rene/LDP
 
 PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
 
-if [ -d ~/scripts-and-utilities ]; then # { 
-  export PATH=~/scripts-and-utilities:$PATH
+if [ -d ~/github/lib/scripts-and-utilities ]; then # { 
+  export PATH=~/github/lib/scripts-and-utilities:$PATH
 fi # }
 
 # Ignore case of files in shell {
