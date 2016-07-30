@@ -8,6 +8,7 @@ export git_work_dir=~/localgit/
 export EDITOR=vim
 export github_root=~/github/github/
 export ldp_dir=/home/rene/LDP/
+export rn_lokal_root=$HOME/renenyffenegger.ch/
 # }
 
 PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
