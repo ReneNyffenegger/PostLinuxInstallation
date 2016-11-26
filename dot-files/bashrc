@@ -20,6 +20,9 @@ fi # }
 if [ -d ~/localgit/scripts ]; then # {
   export PATH=~/localgit/scripts:$PATH
 fi # }
+if [ -d $github_root/vim/runtime ]; then # {
+  export VIMRUNTIME=$github_root/vim/runtime
+fi # }
 
 # Ignore case of files in shell {
 #   http://unix.stackexchange.com/a/48773/6479
