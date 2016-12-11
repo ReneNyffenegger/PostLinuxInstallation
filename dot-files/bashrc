@@ -8,7 +8,7 @@ export git_work_dir=~/localgit/
 export EDITOR=vim
 export github_top_root=~/github/
 export github_root=${github_top_root}github/
-export digitales_backup=$HOME/Digitales-Backup
+export digitales_backup=$HOME/Digitales-Backup/
 export ldp_dir=/home/rene/LDP/
 export rn_root=$HOME/renenyffenegger.ch/
 # }
