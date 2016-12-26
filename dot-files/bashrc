@@ -4,9 +4,20 @@
 set -o vi
 
 # Environment variables {
-export git_work_dir=~/localgit/
+
+if [ "$(hostname)" == "T420" ]; then
+  export git_work_dir=/c/localgit/
+  export github_top_root=/c/github/
+
+  # TODO It should not be necessary to unset this VIMRUNTIME
+  unset VIMRUNTIME
+
+  alias vim='vim -u ~/.vim/vimrc'
+else
+  export git_work_dir=~/localgit/
+  export github_top_root=~/github/
+fi
 export EDITOR=vim
-export github_top_root=~/github/
 export github_root=${github_top_root}github/
 export digitales_backup=$HOME/Digitales-Backup/
 export ldp_dir=/home/rene/LDP/
