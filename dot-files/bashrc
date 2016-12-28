@@ -81,7 +81,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 #      export TERM=msys
 #
 # # }
-elif [ "$(uname -o)"  == "Cygwin" || "$(uname -o)" == "Msys" ]; then # {
+elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
 
 #  TODO
 #    Compare condition above with
@@ -127,4 +127,3 @@ function mdcd() { # mkdir and cd into it
 }
 
 # }
-
