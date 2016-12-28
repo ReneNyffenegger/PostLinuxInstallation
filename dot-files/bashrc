@@ -67,20 +67,21 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
     :
 
 # }
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then # {
-
-     # ----- Windows NT platform. 
-     #
-     # Assuming it's msys
-     # TODO: is it always Msys?      
-     
-  #  Make sure that Git does not always say
-  # «WARNING: terminal is not fully functional»
-
-     export TERM=msys
-
-# }
-elif [ "$(uname -o)"  == "Cygwin" ]; then # {
+# 2016-12-28: Is this elif (MINGW32_NT) still useful?
+# elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then # { MSYS
+#
+#      # ----- Windows NT platform.
+#      #
+#      # Assuming it's msys
+#      # TODO: is it always Msys?
+#
+#   #  Make sure that Git does not always say
+#   # «WARNING: terminal is not fully functional»
+#
+#      export TERM=msys
+#
+# # }
+elif [ "$(uname -o)"  == "Cygwin" || "$(uname -o)" == "Msys" ]; then # {
 
 #  TODO
 #    Compare condition above with
