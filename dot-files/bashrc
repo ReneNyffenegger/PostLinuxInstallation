@@ -80,6 +80,8 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
 #       fi
 
    # 2016-12-28: Allow backspace in «vi mode» to erase letter to the left:
+   # 2016-12-29: Note, mintty.exe has the option »Backarrow sends ^H« (under Keys).
+   #             Using this option might render the stty erase ^? unnecessary.
    stty erase ^?
 
    alias vim='vim  -u ~/.vim/vimrc'
