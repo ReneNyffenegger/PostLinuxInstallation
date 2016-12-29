@@ -28,7 +28,7 @@ if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
 fi # }
 if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir
   export git_local_repo_dir=/media/rene/TOSHIBA\ EXT/git
-elif [ -d /cygdrive/f/git ]; then # {
+elif [ -d /cygdrive/f/git ]; then
   export git_local_repo_dir=/cygdrive/f/git
 fi # }
 
@@ -49,9 +49,7 @@ export HISTCONTROL=ignoreboth
 
 # }
 
-if   [ "$(uname)" == "Darwin" ]; then # {
-
-    # Mac OS
+if   [ "$(uname)" == "Darwin" ]; then # { Mac OS
     :
 
 # }
@@ -60,8 +58,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
     :
 
 # }
-# 2016-12-28: Is this elif (MINGW32_NT) still useful?
 # elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then # { MSYS
+# 2016-12-28: Is this elif (MINGW32_NT) still useful?
 #
 #      # ----- Windows NT platform.
 #      #
@@ -96,8 +94,6 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
    fi # }
 
 fi # }
-
-
 
 # Alias {
 alias ls='ls --color=auto'
