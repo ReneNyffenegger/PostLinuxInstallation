@@ -5,18 +5,9 @@ set -o vi
 
 # Environment variables {
 
-if [ "$(hostname)" == "T420" ]; then
-  export git_work_dir=/c/localgit/
-  export github_top_root=/c/github/
+export git_work_dir=~/localgit/
+export github_top_root=~/github/
 
-  # TODO It should not be necessary to unset this VIMRUNTIME
-  unset VIMRUNTIME
-
-  alias vim='vim -u ~/.vim/vimrc'
-else
-  export git_work_dir=~/localgit/
-  export github_top_root=~/github/
-fi
 export EDITOR=vim
 export github_root=${github_top_root}github/
 export digitales_backup=$HOME/Digitales-Backup/
@@ -88,15 +79,23 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
 #       if [[ $OSTYPE == *cygwin* ]]; then
 #       fi
 
+   # 2016-12-28: Allow backspace in «vi mode» to erase letter to the left:
+   stty erase ^?
+
+   alias vim='vim  -u ~/.vim/vimrc'
+
    alias dospath='cygpath -w `pwd`'
    alias pc='dospath > /dev/clipboard'
    alias c:='cd /cygdrive/c'
 
+   if [ "$(uname -o)" == "Cygwin" ]; then # {
+     alias gvim='gvim -u ~/.vim/vimrc'
+     export DISPLAY=:0.0
+   fi # }
+
 fi # }
 
 
-# 2016-12-28: Allow backspace in «vi mode» to erase letter to the left:
-stty erase ^?
 
 # Alias {
 alias ls='ls --color=auto'
