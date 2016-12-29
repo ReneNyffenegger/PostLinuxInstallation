@@ -84,7 +84,9 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
    #             Using this option might render the stty erase ^? unnecessary.
    stty erase ^?
 
-   alias vim='vim  -u ~/.vim/vimrc'
+   # 2016-12-29: vim doesn't seem to set MYVIMRC if started with -u
+   #             Therefore, it's set from the outside
+   alias vim='MYVIMRC=~/.vim/vimrc vim  -u ~/.vim/vimrc'
 
    alias dospath='cygpath -w `pwd`'
    alias pc='dospath > /dev/clipboard'
