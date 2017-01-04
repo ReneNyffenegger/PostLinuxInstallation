@@ -116,18 +116,28 @@ alias cdloc='cd ~/localgit'
 
 function fb() { # http://unix.stackexchange.com/questions/278732/is-there-a-standard-abbreviation-for-find-name-foo-or-do-i-need-a-function
   find . -iname "$1"
-}
+} # }
 
 function mdcd() { # mkdir and cd into it
   dir=$1
   
   if [ -e "$dir" ]; then
     echo "File or directory $dir already exists";
-    exit -1
+    return
   fi
   
   mkdir "$dir"
   cd    "$dir"
-}
+} # }
+
+function vwh() { # view (executable) script
+  local f=$(which $1)
+  if [ ! -f "$f" ]; then
+     echo "File $f does not exist"
+     return
+  fi
+
+  v "$f"
+} # }
 
 # }
