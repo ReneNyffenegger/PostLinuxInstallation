@@ -15,7 +15,13 @@ export ldp_dir=/home/rene/LDP/
 export rn_root=$HOME/renenyffenegger.ch/
 # }
 
-PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
+# 2017-01-13
+#
+# history command number?
+# PS1="\[\033[0;34m\]\w \[\033[0;35m\]\! \[\033[0m\]>"
+#
+# username @ hostname
+PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$"
 
 if [ -d ~/github/lib/scripts ]; then # {
   export PATH=~/github/lib/scripts:$PATH
