@@ -114,6 +114,7 @@ alias cdnot='cd $github_root/notes/notes'
 alias cdhyd='cd $github_root/Hydroplattentheorie'
 alias cdldp='cd $ldp_dir'
 alias cdloc='cd ~/localgit'
+alias cdkom='cd ${github_root}Bibelkommentare'
 # }
 # Functions {
 
