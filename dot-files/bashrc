@@ -124,7 +124,7 @@ alias cdkom='cd ${github_root}Bibelkommentare'
 
 if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
   alias key='${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh'
-  key
+  ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
 else
   echo ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!
 fi # }
