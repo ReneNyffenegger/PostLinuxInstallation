@@ -121,6 +121,7 @@ alias cdhyd='cd $github_root/Hydroplattentheorie'
 alias cdldp='cd $ldp_dir'
 alias cdloc='cd ~/localgit'
 alias cdkom='cd ${github_root}Bibelkommentare'
+alias abc='abc.sh'
 
 if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
   alias key='${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh'
