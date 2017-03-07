@@ -123,6 +123,7 @@ alias cdloc='cd ~/localgit'
 alias cdkom='cd ${github_root}Bibelkommentare'
 alias abc='abc.sh'
 alias ghr='ghr.pl'
+alias rs='Rscript'
 
 if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
   alias key='${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh'
