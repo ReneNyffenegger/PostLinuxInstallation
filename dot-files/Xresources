@@ -1,0 +1,17 @@
+!
+!   source this file with
+!       #include "${github_root}PostLinuxInstallation/dot-files/Xresources"
+!   in ~/.Xresource
+! 
+
+!
+!  xrdb -merge path/to/Xresource-file
+!  https://bbs.archlinux.org/viewtopic.php?id=120792
+!  /home/rene/github/github/notes/notes/Linux/X/xterm
+!  
+!
+xterm*savelines: 20000
+xterm*rightScrollBar: true
+xterm*ScrollBar: true
+xterm*foreground: rgb:ff/e5/c3
+xterm*background: rgb:00/00/00
