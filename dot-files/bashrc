@@ -33,11 +33,13 @@ if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
   export VIMRUNTIME=${github_root}vim/runtime
 fi # }
 if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir
-  export git_local_repo_dir=/media/rene/TOSHIBA\ EXT/git
+  export git_local_repo_dir=/media/rene/TOSHIBA\ EXT/git/
+if [ -d /mnt/E/git ]; then # T420
+  export git_local_repo_dir=/mnt/E/git/
 elif [ -d /cygdrive/f/git ]; then
-  export git_local_repo_dir=/cygdrive/f/git
+  export git_local_repo_dir=/cygdrive/f/git/
 elif [ -d /cygdrive/x/git ]; then
-  export git_local_repo_dir=/cygdrive/x/git
+  export git_local_repo_dir=/cygdrive/x/git/
 fi # }
 
 # Ignore case of files in shell {
