@@ -45,6 +45,11 @@ fi
 # https://wiki.archlinux.org/index.php/openbox
 # https://wiki.archlinux.org/index.php/Xinit
 
-xscreensaver &
-xsetroot -cursor_name left_ptr &
+xscreensaver                        &
+xsetroot      -cursor_name left_ptr &
+#
+#  Note: specifying »exec openbox« instead of
+#       »exec openbox-session« will prevent autostart
+#        in /etx/xdg/autostart
+#
 exec openbox-session
