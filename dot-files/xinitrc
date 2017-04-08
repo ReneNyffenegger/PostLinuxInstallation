@@ -50,6 +50,6 @@ xsetroot      -cursor_name left_ptr &
 #
 #  Note: specifying »exec openbox« instead of
 #       »exec openbox-session« will prevent autostart
-#        in /etx/xdg/autostart
+#        in /etc/xdg/autostart
 #
 exec openbox-session
