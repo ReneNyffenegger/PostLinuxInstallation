@@ -47,6 +47,10 @@ fi
 
 xscreensaver                        &
 xsetroot      -cursor_name left_ptr &
+
+# pacman -S volumeicon
+volumeicon                          &
+
 #
 #  Note: specifying »exec openbox« instead of
 #       »exec openbox-session« will prevent autostart
