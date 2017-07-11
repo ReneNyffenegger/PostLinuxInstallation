@@ -48,8 +48,20 @@ fi
 xscreensaver                        &
 xsetroot      -cursor_name left_ptr &
 
+# volumeicon
+# ----------
+#
 # pacman -S volumeicon
-volumeicon                          &
+#
+# 2017-07-11: Uncommenting:
+#   Whenever volumeicon is used to mute
+#   the sound, it cannot be unmuted again
+#   with volumeicon. Instead, I had to
+#   unmute it with
+#     sudo amixer sset Master unmute
+#    (http://renenyffenegger.ch/notes/Linux/sound/index)
+#
+# volumeicon                        &
 
 #
 #  Note: specifying »exec openbox« instead of
