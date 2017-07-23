@@ -77,6 +77,14 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 
   alias v='gvim'
 
+# 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
+  if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
+    alias key='${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh'
+    ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
+  else
+    echo ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!
+  fi # }
+
 # }
 # elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then # { MSYS
 # 2016-12-28: Is this elif (MINGW32_NT) still useful?
@@ -137,12 +145,6 @@ alias abc='abc.sh'
 alias ghr='ghr.pl'
 alias rs='Rscript'
 
-if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
-  alias key='${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh'
-  ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
-else
-  echo ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!
-fi # }
 
 # }
 # Functions {
