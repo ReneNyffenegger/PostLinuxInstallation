@@ -13,7 +13,11 @@
 ! character width x character height + pixel from left + pixel from top
 XTerm*geometry: 255x50+10+10
 XTerm*saveLines: 20000
+! Xterm*scrollBar: on
 XTerm*rightScrollBar: true
 XTerm*ScrollBar: true
 XTerm*foreground: rgb:ff/e5/c3
 XTerm*background: rgb:00/00/00
+
+! https://askubuntu.com/a/541730
+XTerm*selectToClipboard: true
