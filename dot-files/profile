@@ -1,2 +1,8 @@
 export TZ=Europe/Zurich
 export EDITOR=gvim
+
+if [ "$BASH" ] && [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+true
