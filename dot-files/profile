@@ -5,6 +5,7 @@
 export TZ=Europe/Zurich
 export EDITOR=gvim
 
+echo $(date) .profile: \$BASH=$BASH >> ~/.dotfile-sequence.log
 if [ "$BASH" ] && [ -f ~/.bashrc ]; then
     echo $(date) .profile ~/.bashrc exists, so sourcing it >> ~/.dotfile-sequence.log
 	. ~/.bashrc
