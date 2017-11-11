@@ -21,3 +21,8 @@ XTerm*background: rgb:00/00/00
 
 ! https://askubuntu.com/a/541730
 XTerm*selectToClipboard: true
+
+! https://awhan.wordpress.com/2010/06/20/alt-key-does-not-work-in-xterm-in-archlinux/
+! http://www.humbug.in/2010/enable-alt-key-in-xterm/
+XTerm*metaSendsEscape: true
+XTerm*eightBitInput: false

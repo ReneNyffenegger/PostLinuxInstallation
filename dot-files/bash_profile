@@ -1,1 +1,13 @@
+# vim: ft=sh
+
 . ~/.tq84-dotfile-sequence .bash_profile
+
+if  [[ -r ~/.profile ]]; then
+        echo $(date) .bash_profile: ~/.profile exists, sourcing it >> ~/.dotfile-sequence.log
+        . ~/.profile
+fi
+
+if  [[ -r ~/.bashrc ]]; then
+        echo $(date) .bashrc exists, sourcing it: >> ~/.dotfile-sequence.log
+        . ~/.bashrc
+fi

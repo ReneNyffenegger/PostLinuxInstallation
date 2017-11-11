@@ -1,2 +1,20 @@
 set editing-mode vi
 ",ltr": "ls -ltr "
+
+# http://www.humbug.in/2010/enable-alt-key-in-xterm/ {
+
+
+#   Insert iso-latin1 characters without
+#   converting to prefix-meta sequences
+set convert-meta off
+
+#   Show characters with eigth bit set.
+set output-meta  on
+
+#   don't strip characters to 7 bits when reading
+set input-meta   on
+
+#   Apparently, meta-flag is a synonym for input-meta
+set meta-flag    on
+
+# }
