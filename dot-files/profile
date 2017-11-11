@@ -1,3 +1,7 @@
+# vim: ft=sh
+
+. ~/.tq84-dotfile-sequence .profile
+
 export TZ=Europe/Zurich
 export EDITOR=gvim
 
