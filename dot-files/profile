@@ -1,0 +1,2 @@
+export TZ=Europe/Zurich
+export EDITOR=gvim
