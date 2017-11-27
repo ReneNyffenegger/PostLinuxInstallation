@@ -7,7 +7,10 @@ if  [[ -r ~/.profile ]]; then
         . ~/.profile
 fi
 
-if  [[ -r ~/.bashrc ]]; then
-        echo $(date) .bash_profile: .bashrc exists, sourcing it: >> ~/.dotfile-sequence.log
-        . ~/.bashrc
-fi
+case "$-" in *i*)
+   echo $(date) - .bash_profile: \$- indicates an interactive shell  >> ~/.dotfile-sequence.log
+   if [ -r ~/.bashrc ]; then
+         echo $(date) - .bash_profile: ~/.bashrc exists, sourcing it >> ~/.dotfile-sequence.log
+         . ~/.bashrc;
+   fi;;
+esac
