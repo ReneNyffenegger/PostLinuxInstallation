@@ -8,7 +8,7 @@ if [[ "$-" != *i* ]]; then
   echo $(date) .bashrc: is not running interactively, so returning >> ~/.dotfile-sequence.log
   return
 fi
-echo $(date) .bashrc: Apparaently running interactively, going on with script >> ~/.dotfile-sequence.log
+echo $(date) .bashrc: Apparently running interactively, going on with script >> ~/.dotfile-sequence.log
 
 set -o vi
 
