@@ -11,4 +11,6 @@ if [ "$BASH" ] && [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
 
+. .ls_colors
+
 true
