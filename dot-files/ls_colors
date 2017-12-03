@@ -1,3 +1,4 @@
+. ~/.tq84-dotfile-sequence .ls_colors
 
 #          fg   bg
 # -------+----+----
