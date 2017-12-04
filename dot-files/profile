@@ -12,7 +12,7 @@ export EDITOR=gvim
 echo $(date) .profile: \$BASH=$BASH >> ~/.dotfile-sequence.log
 if [ "$BASH" ] && [ -f ~/.bashrc ]; then
   # It's a bash and a ~/.bashrc exists.
-    echo $(date) .profile ~/.bashrc exists, so sourcing it >> ~/.dotfile-sequence.log
+    echo $(date) .profile: ~/.bashrc exists, so sourcing it >> ~/.dotfile-sequence.log
 	. ~/.bashrc
 fi
 
@@ -21,5 +21,8 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 . .ls_colors
+
+# 2017-12-04: best privacy
+umask 077
 
 true
