@@ -41,7 +41,7 @@
   LS_COLORS="${LS_COLORS}sg=30;43:"           # setgid
   LS_COLORS="${LS_COLORS}ca=30;41:"
   LS_COLORS="${LS_COLORS}tw=30;42:"           # directory with sticky bit and world writable (+t, o+w)
-  LS_COLORS="${LS_COLORS}ow=91:"              # directory that is world writable
+  LS_COLORS="${LS_COLORS}ow=30;107:"          # directory that is world writable
   LS_COLORS="${LS_COLORS}st=37;44:"           # directory with sticky bit
   LS_COLORS="${LS_COLORS}ex=01;32:"           # executable file
 
