@@ -20,7 +20,12 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-. .ls_colors
+if [ -r ~/.ls_colors ]; then
+  echo $(date) .profile: ~/.ls_colors is readable, so sourcing it >> ~/.dotfile-sequence.log
+  . ~/.ls_colors
+else
+  echo $(date) .profile: ~/.ls_colors is NOT readable >> ~/.dotfile-sequence.log
+fi
 
 # 2017-12-04: best privacy
 umask 077

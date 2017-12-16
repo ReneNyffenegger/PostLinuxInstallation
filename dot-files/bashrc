@@ -160,7 +160,11 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
 fi # }
 
 # Alias {
+
 alias ls='ls --color=auto'
+alias ll='ls -lF'
+alias la='ls -lFA'
+
 alias info='info --vi-keys'
 alias gitp=". gitp.sh"
 alias gitl="git-pull.pl"

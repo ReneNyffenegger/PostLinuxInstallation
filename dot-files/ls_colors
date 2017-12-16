@@ -1,3 +1,11 @@
+#
+#  TODO:
+#    The file should be created with
+#       dircolors -p > $LS_COLORS_FILE
+#    and then be read in ./profile with
+#       eval "$(dircolors -b $LS_COLORS_FILE)"
+#
+#
 . ~/.tq84-dotfile-sequence .ls_colors
 
 #          fg   bg
