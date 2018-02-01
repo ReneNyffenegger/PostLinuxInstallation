@@ -4,28 +4,62 @@
 # if ~/.bash_profile or ~/.bash_login
 # exists.
 
+if [ "$BASH" ]; then
+
+  dot_file_log() {
+    local script_name=$1
+    local text=$2
+    echo $(date) $script_name: $text >> ~/.dotfile-sequence.log
+  }
+  export -f dot_file_log
+
+fi
+
 . ~/.tq84-dotfile-sequence .profile
 
 export TZ=Europe/Zurich
 export EDITOR=gvim
 
 echo $(date) .profile: \$BASH=$BASH >> ~/.dotfile-sequence.log
-if [ "$BASH" ] && [ -f ~/.bashrc ]; then
+if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
   # It's a bash and a ~/.bashrc exists.
-    echo $(date) .profile: ~/.bashrc exists, so sourcing it >> ~/.dotfile-sequence.log
+    dot_file_log .profile "~/.bashrc exists, so sourcing it"
+#   echo $(date) .profile: ~/.bashrc exists, so sourcing it >> ~/.dotfile-sequence.log
 	. ~/.bashrc
-fi
+fi # }
 
-if [ -d "$HOME/bin" ] ; then
+if [ -d "$HOME/bin" ] ; then # {
     PATH="$HOME/bin:$PATH"
-fi
+fi # }
 
-if [ -r ~/.ls_colors ]; then
+if [ -r ~/.ls_colors ]; then # {
   echo $(date) .profile: ~/.ls_colors is readable, so sourcing it >> ~/.dotfile-sequence.log
   . ~/.ls_colors
 else
   echo $(date) .profile: ~/.ls_colors is NOT readable >> ~/.dotfile-sequence.log
-fi
+fi # }
+
+if [ -d /u01/app/oracle ]; then # 2018-01-31 { Oracle
+
+  export ORACLE_BASE=/u01/app/oracle
+  dot_file_log .profile "/u01/app/oracle exists, exporting ORACLE_BASE=$ORACLE_BASE"
+
+  if [ -d $ORACLE_BASE/product/*/*1 ]; then
+
+#    export ORACLE_HOME=($ORACLE_BASE/product/*/*1)  # Parentheses used in order to expand the stars: https://stackoverflow.com/a/104023/180275
+     export ORACLE_HOME=$(ls -1d $ORACLE_BASE/product/*/*1)
+     dot_file_log .profile "$ORACLE_BASE/product/12.2.0/*1 exists, exporting ORACLE_HOME=$ORACLE_HOME"
+
+     export ORACLE_SID=ORA12
+     export ORACLE_UNQNAME=ORA12              # Apparently used for $ORACLE_BASE/diag/rdbms/$ORACLE_UNQNAME/$ORACLE_SID/trace
+     export PATH=$ORACLE_HOME/bin:$PATH:.
+  #  export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib # ???
+  #  export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib # Really needed?
+
+  fi # }
+
+fi # }
+
 
 # 2017-12-04: best privacy
 umask 077

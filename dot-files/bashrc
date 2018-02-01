@@ -3,12 +3,16 @@
 echo $(date) .bashrc: "\$- = $-" >> ~/.dotfile-sequence.log
 
 
-# If not running interactively, don't do anything
-if [[ "$-" != *i* ]]; then
-  echo $(date) .bashrc: is not running interactively, so returning >> ~/.dotfile-sequence.log
+if [[ "$-" != *i* ]]; then # { Check for interactive execution
+# If not running interactively, don't do anything.
+# .bashrc is also read during non-interactive SSH command
+# execution which is whay it has a check at the beginning
+# echo $(date) .bashrc: is not running interactively, so returning >> ~/.dotfile-sequence.log
+  dot_file_log .bashrc "is not running interactively, so returning"
   return
-fi
-echo $(date) .bashrc: Apparently running interactively, going on with script >> ~/.dotfile-sequence.log
+fi # }
+# echo $(date) .bashrc: Apparently running interactively, going on with script >> ~/.dotfile-sequence.log
+dot_file_log .bashrc "Apparently running interactively, going on with script"
 
 set -o vi
 
@@ -59,21 +63,30 @@ if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
 fi # }
 
 if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir, hd_mount_point
-# 2017-04-08 export git_local_repo_dir=/media/rene/TOSHIBA\ EXT/git/
+  dot_file_log .bash_rc "/media/rene/TOSHIBA EXT/git exists, exporting hd_mount_point"
   export hd_mount_point=/media/rene/TOSHIBA\ EXT/
 elif [ -d /mnt/E/git ]; then # T420
-# 2017-04-08  export git_local_repo_dir=/mnt/E/git/
+  dot_file_log .bash_rc "/mnt/E exists, exporting hd_mount_point"
   export hd_mount_point=/mnt/E/
 elif [ -d /cygdrive/f/git ]; then
-# 2017-04-08  export git_local_repo_dir=/cygdrive/f/git/
+  dot_file_log .bash_rc "/cygdrive/f/git exists, exporting hd_mount_point"
   export hd_mount_point=/cygdrive/f/git/
 elif [ -d /cygdrive/x/git ]; then
-# 2017-04-08  export git_local_repo_dir=/cygdrive/x/git/
+  dot_file_log .bash_rc "/cygdrive/x/git exists, exporting hd_mount_point"
   export hd_mount_point=/cygdrive/x/git/
 fi # }
 
 # 2017-04-08
 export git_local_repo_dir=${hd_mount_point}git/
+
+# 2018-01-31: Oracle {
+if [ "$ORACLE_HOME" ]; then
+  dot_file_log .bashrc "ORACLE_HOME exists setting some aliases"
+
+  alias sqlplus="rlwrap -r sqlplus "
+  alias diag="cd $ORACLE_BASE/diag/rdbms/$ORACLE_UNQNAME/$ORACLE_SID/trace"
+
+fi # }
 
 # Ignore case of files in shell {
 #   http://unix.stackexchange.com/a/48773/6479
