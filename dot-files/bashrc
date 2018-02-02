@@ -16,17 +16,6 @@ dot_file_log .bashrc "Apparently running interactively, going on with script"
 
 set -o vi
 
-# Environment variables {
-
-export git_work_dir=~/localgit/
-
-# 2018-02-01 gone to profile
-# export github_top_root=~/github/
-# export github_root=${github_top_root}github/
-export digitales_backup=$HOME/Digitales-Backup/
-export ldp_dir=/home/rene/LDP/
-export rn_root=$HOME/renenyffenegger.ch/
-# }
 
 # 2017-01-13
 #

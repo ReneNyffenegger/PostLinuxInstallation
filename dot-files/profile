@@ -1,10 +1,12 @@
 # vim: ft=sh
-#
+
+. ~/.tq84-dotfile-sequence .profile
+
 # This file is not read by bash,
 # if ~/.bash_profile or ~/.bash_login
 # exists.
 
-if [ "$BASH" ]; then
+if [ "$BASH" ]; then # {
 
   dot_file_log() {
     local script_name=$1
@@ -13,22 +15,31 @@ if [ "$BASH" ]; then
   }
   export -f dot_file_log
 
-fi
+fi # }
 
-. ~/.tq84-dotfile-sequence .profile
-
+# { Environment variables
 export TZ=Europe/Zurich
 export EDITOR=gvim
 
-export github_top_root=~/github/
-export github_root=${github_top_root}github/
+if [[ -d ~/github ]]; then # {
+   export github_top_root=~/github/
+   export github_root=${github_top_root}github/
+fi # }
 
-echo $(date) .profile: \$BASH=$BASH >> ~/.dotfile-sequence.log
+
+[[ -d ~/localgit           ]] && export git_work_dir=~/localgit/
+[[ -d ~/Digitales-Backup   ]] && export digitales_backup=$HOME/Digitales-Backup/
+[[ -d ~/LDP                ]] && export ldp_dir=/home/rene/LDP/
+[[ -d ~/renenyffenegger.ch ]] && export rn_root=$HOME/renenyffenegger.ch/
+
+# }
+
+dot_file_log .profile "\$BASH=$BASH"
+# echo $(date) .profile: \$BASH=$BASH >> ~/.dotfile-sequence.log
 if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
   # It's a bash and a ~/.bashrc exists.
     dot_file_log .profile "~/.bashrc exists, so sourcing it"
-#   echo $(date) .profile: ~/.bashrc exists, so sourcing it >> ~/.dotfile-sequence.log
-	. ~/.bashrc
+    . ~/.bashrc
 fi # }
 
 if [ -d "$HOME/bin" ] ; then # {
@@ -36,11 +47,9 @@ if [ -d "$HOME/bin" ] ; then # {
 fi # }
 
 if [ -r ~/.ls_colors ]; then # {
-# echo $(date) .profile: ~/.ls_colors is readable, so sourcing it >> ~/.dotfile-sequence.log
   dot_file_log .profile "~/.ls_colors is readable, so sourcing it"
   . ~/.ls_colors
 else
-# echo $(date) .profile: ~/.ls_colors is NOT readable >> ~/.dotfile-sequence.log
   dot_file_log .profile "~/.ls_colors is NOT readable"
 fi # }
 
