@@ -19,10 +19,10 @@ set -o vi
 # Environment variables {
 
 export git_work_dir=~/localgit/
-export github_top_root=~/github/
 
-# 2017-11-11: gone to .profile export EDITOR=vim
-export github_root=${github_top_root}github/
+# 2018-02-01 gone to profile
+# export github_top_root=~/github/
+# export github_root=${github_top_root}github/
 export digitales_backup=$HOME/Digitales-Backup/
 export ldp_dir=/home/rene/LDP/
 export rn_root=$HOME/renenyffenegger.ch/

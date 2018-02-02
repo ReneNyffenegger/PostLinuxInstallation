@@ -20,6 +20,9 @@ fi
 export TZ=Europe/Zurich
 export EDITOR=gvim
 
+export github_top_root=~/github/
+export github_root=${github_top_root}github/
+
 echo $(date) .profile: \$BASH=$BASH >> ~/.dotfile-sequence.log
 if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
   # It's a bash and a ~/.bashrc exists.
@@ -33,10 +36,12 @@ if [ -d "$HOME/bin" ] ; then # {
 fi # }
 
 if [ -r ~/.ls_colors ]; then # {
-  echo $(date) .profile: ~/.ls_colors is readable, so sourcing it >> ~/.dotfile-sequence.log
+# echo $(date) .profile: ~/.ls_colors is readable, so sourcing it >> ~/.dotfile-sequence.log
+  dot_file_log .profile "~/.ls_colors is readable, so sourcing it"
   . ~/.ls_colors
 else
-  echo $(date) .profile: ~/.ls_colors is NOT readable >> ~/.dotfile-sequence.log
+# echo $(date) .profile: ~/.ls_colors is NOT readable >> ~/.dotfile-sequence.log
+  dot_file_log .profile "~/.ls_colors is NOT readable"
 fi # }
 
 if [ -d /u01/app/oracle ]; then # 2018-01-31 { Oracle
@@ -56,12 +61,20 @@ if [ -d /u01/app/oracle ]; then # 2018-01-31 { Oracle
   #  export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib # ???
   #  export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib # Really needed?
 
+     if [[ -d $github_root/oracle_scriptlets/sqlpath ]]; then
+      #  Apparently, ORACLE_PATH, rather than SQLPATH is needed nowadays.
+      #  export SQLPATH=$github_root/oracle_scriptlets/sqlpath
+         export ORACLE_PATH=${github_root}oracle_scriptlets/sqlpath
+         dot_file_log .profile "$github_root/oracle_scriptlets/sqlpath exists, exporting ORACLE_PATH=$ORACLE_PATH"
+     else
+         dot_file_log .profile "$github_root/oracle_scriptlets/sqlpath does not exist"
+     fi
   fi # }
 
 fi # }
 
 
-# 2017-12-04: best privacy
+# best privacy
 umask 077
 
 true
