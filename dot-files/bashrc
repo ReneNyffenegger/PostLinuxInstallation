@@ -136,6 +136,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 # # }
 elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
 
+    dot_file_log .bashrc "uname -o is $(uname -o), special processing for cygwin or msys, \$OSTYPE=$OSTYPE"
+ 
 #  TODO
 #    Compare condition above with
 #       if [[ $OSTYPE == *cygwin* ]]; then
@@ -154,6 +156,14 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
    alias pc='dospath > /dev/clipboard'
    alias c:='cd /cygdrive/c'
 
+   if [ "$(uname -o)" == "Msys"   ]; then # {
+      #
+      #  Set MSYS variable to llow to create symbolic links in msys.
+      #  Apparently, in order for this to work, it requires elevated mode.
+      #
+        export MSYS=winsymlinks:nativestrict 
+
+   fi # }
    if [ "$(uname -o)" == "Cygwin" ]; then # {
      alias gvim='gvim -u ~/.vim/vimrc'
      export DISPLAY=:0.0
