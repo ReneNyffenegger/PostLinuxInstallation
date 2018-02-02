@@ -175,7 +175,7 @@ fi # }
 # Alias {
 
 alias ls='ls --color=auto'
-alias ll='ls -lF'
+alias ll='ls -lFh'
 alias la='ls -lFA'
 
 alias info='info --vi-keys'
