@@ -8,6 +8,7 @@
 
 if [ "$BASH" ]; then # {
 
+  echo $(date) ".profile: \$BASH=$BASH, definining function dot_file_log()" >> ~/.dotfile-sequence.log
   dot_file_log() {
     local script_name=$1
     local text=$2
@@ -24,21 +25,20 @@ export EDITOR=gvim
 if [[ -d ~/github ]]; then # {
    export github_top_root=~/github/
    export github_root=${github_top_root}github/
+   dot_file_log .profile "github_top_root=$github_top_root, github_root=$github_root"
 fi # }
 
+if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
+  export VIMRUNTIME=${github_root}vim/runtime
+  dot_file_log .profile "exported VIMRUNTIME=$VIMRUNTIME"
+fi # }
 
-[[ -d ~/localgit           ]] && export git_work_dir=~/localgit/
-[[ -d ~/Digitales-Backup   ]] && export digitales_backup=$HOME/Digitales-Backup/
-[[ -d ~/LDP                ]] && export ldp_dir=/home/rene/LDP/
-[[ -d ~/renenyffenegger.ch ]] && export rn_root=$HOME/renenyffenegger.ch/
 
 # }
 
 dot_file_log .profile "\$BASH=$BASH"
-# echo $(date) .profile: \$BASH=$BASH >> ~/.dotfile-sequence.log
 if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
-  # It's a bash and a ~/.bashrc exists.
-    dot_file_log .profile "~/.bashrc exists, so sourcing it"
+    dot_file_log .profile "It's a bash and ~/.bashrc exists, so sourcing it"
     . ~/.bashrc
 fi # }
 

@@ -1,3 +1,9 @@
+#
+#   ~/.bashrc: executed by bash for non-login shells.
+#
+#   examples in package bash-doc in
+#     /usr/share/doc/bash/examples/startup-files
+#
 . ~/.tq84-dotfile-sequence .bashrc
 
 echo $(date) .bashrc: "\$- = $-" >> ~/.dotfile-sequence.log
@@ -6,12 +12,20 @@ echo $(date) .bashrc: "\$- = $-" >> ~/.dotfile-sequence.log
 if [[ "$-" != *i* ]]; then # { Check for interactive execution
 # If not running interactively, don't do anything.
 # .bashrc is also read during non-interactive SSH command
-# execution which is whay it has a check at the beginning
-# echo $(date) .bashrc: is not running interactively, so returning >> ~/.dotfile-sequence.log
+# execution which is why it has a check at the beginning
+#
+# Alternative check:
+#    case $- in
+#         *i*)       ;;
+#           *) return;;
+#    esac
+#
+
   dot_file_log .bashrc "is not running interactively, so returning"
   return
+
 fi # }
-# echo $(date) .bashrc: Apparently running interactively, going on with script >> ~/.dotfile-sequence.log
+
 dot_file_log .bashrc "Apparently running interactively, going on with script"
 
 set -o vi
@@ -32,12 +46,32 @@ esac
 
 if [ "$color_prompt" = yes ]; then
 #   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+#
     PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\! \$ "
+#               \w set xterm's title to current working dir ???
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt
 # }
+
+export_var_if_dir_exists() { # {
+  local dir=$1
+  local var=$2
+
+  if [[ -d "$dir" ]]; then
+      export $var="$dir"
+      dot_file_log .profile "$dir exists, exported $var to $dir"
+  else
+      dot_file_log .profile "$dir does not exist, not exporting $var"
+  fi
+} # }
+
+export_var_if_dir_exists ~/localgit/            git_work_dir
+export_var_if_dir_exists ~/Digitales-Backup/    digitales_backup
+export_var_if_dir_exists ~/LDP/                 ldp_dir
+export_var_if_dir_exists ~/renenyffenegger.ch/  rn_root
+
 
 if [ -d ~/github/lib/scripts ]; then # {
   export PATH=~/github/lib/scripts:$PATH
@@ -47,12 +81,9 @@ if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
   export PATH=~/localgit/scripts:$PATH
 fi # }
 
-if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
-  export VIMRUNTIME=${github_root}vim/runtime
-fi # }
 
 if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir, hd_mount_point
-  dot_file_log .bash_rc "/media/rene/TOSHIBA EXT/git exists, exporting hd_mount_point"
+  dot_file_log .bashrc "/media/rene/TOSHIBA EXT/git exists, exporting hd_mount_point"
   export hd_mount_point=/media/rene/TOSHIBA\ EXT/
 elif [ -d /mnt/E/git ]; then # T420
   dot_file_log .bash_rc "/mnt/E exists, exporting hd_mount_point"
@@ -65,7 +96,6 @@ elif [ -d /cygdrive/x/git ]; then
   export hd_mount_point=/cygdrive/x/git/
 fi # }
 
-# 2017-04-08
 export git_local_repo_dir=${hd_mount_point}git/
 
 # 2018-01-31: Oracle {
@@ -77,6 +107,8 @@ if [ "$ORACLE_HOME" ]; then
 
 fi # }
 
+# shopt {
+
 # Ignore case of files in shell {
 #   http://unix.stackexchange.com/a/48773/6479
 shopt -s nocaseglob
@@ -86,6 +118,40 @@ shopt -s nocaseglob
 #   zsh:
 #     unsetopt CASE_GLOB
 # }
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# Enable programmable completion features {
+#
+#   Possible already enabled through /etc/bash.bashrc or
+#   /etc/profile
+
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# }
+
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# }
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# ? # set variable identifying the chroot you work in (used in the prompt below)
+# ? if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+# ?     debian_chroot=$(cat /etc/debian_chroot)
+# ? fi
 
 # { History
 
@@ -193,6 +259,9 @@ alias abc='abc.sh'
 alias ghr='ghr.pl'
 alias rs='Rscript'
 
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # }
 # Functions {
