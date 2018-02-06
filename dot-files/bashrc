@@ -6,7 +6,7 @@
 #
 . ~/.tq84-dotfile-sequence .bashrc
 
-echo $(date) .bashrc: "\$- = $-" >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc: "\$- = $-" >> ~/.dotfile-sequence.log
 
 
 if [[ "$-" != *i* ]]; then # { Check for interactive execution
@@ -39,7 +39,7 @@ set -o vi
 # PS1 {
 # username @ hostname
 
-echo $(date) .bashrc: \$TERM=$TERM >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc: \$TERM=$TERM >> ~/.dotfile-sequence.log
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac

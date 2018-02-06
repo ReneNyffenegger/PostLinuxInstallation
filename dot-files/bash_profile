@@ -3,13 +3,13 @@
 . ~/.tq84-dotfile-sequence .bash_profile
 
 if  [[ -r ~/.profile ]]; then
-        echo $(date) .bash_profile: ~/.profile exists, sourcing it >> ~/.dotfile-sequence.log
+        . ~/.tq84-dotfile-log .bash_profile: ~/.profile exists, sourcing it >> ~/.dotfile-sequence.log
         . ~/.profile
 fi
 
 . ~/.tq84-dotfile-log .bash_profile \$-=$-
 case "$-" in *i*)
-   echo $(date) - .bash_profile: \$- indicates an interactive shell  >> ~/.dotfile-sequence.log
+   . ~/.tq84-dotfile-log .bash_profile: \$- indicates an interactive shell  >> ~/.dotfile-sequence.log
    if [ -r ~/.bashrc ]; then
          echo $(date) - .bash_profile: ~/.bashrc exists, sourcing it >> ~/.dotfile-sequence.log
          . ~/.bashrc;
