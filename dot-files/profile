@@ -16,6 +16,8 @@ if [ "$BASH" ]; then # {
   }
   export -f dot_file_log
 
+  dot_file_log .profile "BASH existed, function dot_file_log created and exported"
+
 fi # }
 
 # { Environment variables
