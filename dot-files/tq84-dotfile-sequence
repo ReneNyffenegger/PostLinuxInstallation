@@ -1,4 +1,4 @@
 # vi: ft=sh
 
 export TQ84_DOTFILE_SEQUENCE="$TQ84_DOTFILE_SEQUENCE -> $1 (SHLVL=$SHLVL)"
-echo $(date) $TQ84_DOTFILE_SEQUENCE >> ~/.dotfile-sequence.log
+echo $(date +"%y-%m-%d %H:%M:%S") $TQ84_DOTFILE_SEQUENCE >> ~/.dotfile-sequence.log
