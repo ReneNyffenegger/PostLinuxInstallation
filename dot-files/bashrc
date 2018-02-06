@@ -21,12 +21,12 @@ if [[ "$-" != *i* ]]; then # { Check for interactive execution
 #    esac
 #
 
-  dot_file_log .bashrc "is not running interactively, so returning"
+  .tq84-dotfile-log .bashrc "is not running interactively, so returning"
   return
 
 fi # }
 
-dot_file_log .bashrc "Apparently running interactively, going on with script"
+. ~/.tq84-dotfile-log .bashrc "Apparently running interactively, going on with script"
 
 set -o vi
 
@@ -61,9 +61,9 @@ export_var_if_dir_exists() { # {
 
   if [[ -d "$dir" ]]; then
       export $var="$dir"
-      dot_file_log .profile "$dir exists, exported $var to $dir"
+      . ~/.tq84-dotfile-log .profile "$dir exists, exported $var to $dir"
   else
-      dot_file_log .profile "$dir does not exist, not exporting $var"
+      . ~/.tq84-dotfile-log .profile "$dir does not exist, not exporting $var"
   fi
 } # }
 
@@ -83,16 +83,16 @@ fi # }
 
 
 if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir, hd_mount_point
-  dot_file_log .bashrc "/media/rene/TOSHIBA EXT/git exists, exporting hd_mount_point"
+  . ~/.tq84-dotfile-log .bashrc "/media/rene/TOSHIBA EXT/git exists, exporting hd_mount_point"
   export hd_mount_point=/media/rene/TOSHIBA\ EXT/
 elif [ -d /mnt/E/git ]; then # T420
-  dot_file_log .bash_rc "/mnt/E exists, exporting hd_mount_point"
+  . ~/.tq84-dotfile-log .bash_rc "/mnt/E exists, exporting hd_mount_point"
   export hd_mount_point=/mnt/E/
 elif [ -d /cygdrive/f/git ]; then
-  dot_file_log .bash_rc "/cygdrive/f/git exists, exporting hd_mount_point"
+  . ~/.tq84-dotfile-log .bash_rc "/cygdrive/f/git exists, exporting hd_mount_point"
   export hd_mount_point=/cygdrive/f/git/
 elif [ -d /cygdrive/x/git ]; then
-  dot_file_log .bash_rc "/cygdrive/x/git exists, exporting hd_mount_point"
+  . ~/.tq84-dotfile-log .bash_rc "/cygdrive/x/git exists, exporting hd_mount_point"
   export hd_mount_point=/cygdrive/x/git/
 fi # }
 
@@ -100,7 +100,7 @@ export git_local_repo_dir=${hd_mount_point}git/
 
 # 2018-01-31: Oracle {
 if [ "$ORACLE_HOME" ]; then
-  dot_file_log .bashrc "ORACLE_HOME exists setting some aliases"
+  . ~/.tq84-dotfile-log .bashrc "ORACLE_HOME exists setting some aliases"
 
   alias sqlplus="rlwrap -r sqlplus "
   alias diag="cd $ORACLE_BASE/diag/rdbms/$ORACLE_UNQNAME/$ORACLE_SID/trace"
@@ -180,7 +180,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 # 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
   if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
     alias key='${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh'
-    ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
+#   ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
   else
     echo ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!
   fi # }
@@ -202,7 +202,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 # # }
 elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
 
-    dot_file_log .bashrc "uname -o is $(uname -o), special processing for cygwin or msys, \$OSTYPE=$OSTYPE"
+    . ~/.tq84-dotfile-log .bashrc "uname -o is $(uname -o), special processing for cygwin or msys, \$OSTYPE=$OSTYPE"
  
 #  TODO
 #    Compare condition above with

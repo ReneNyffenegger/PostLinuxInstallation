@@ -7,6 +7,7 @@ if  [[ -r ~/.profile ]]; then
         . ~/.profile
 fi
 
+. ~/.tq84-dotfile-log .bash_profile \$-=$-
 case "$-" in *i*)
    echo $(date) - .bash_profile: \$- indicates an interactive shell  >> ~/.dotfile-sequence.log
    if [ -r ~/.bashrc ]; then

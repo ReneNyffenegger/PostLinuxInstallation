@@ -2,23 +2,27 @@
 
 . ~/.tq84-dotfile-sequence .profile
 
+
 # This file is not read by bash,
 # if ~/.bash_profile or ~/.bash_login
 # exists.
 
-if [ "$BASH" ]; then # {
 
-# echo $(date +"%y-%m-%d %H:%M:%S") ".profile: \$BASH=$BASH, definining function dot_file_log()" >> ~/.dotfile-sequence.log
-  dot_file_log() {
-    local script_name=$1
-    local text=$2
-    echo $(date +"%y-%m-%d %H:%M:%S") $script_name: $text >> ~/.dotfile-sequence.log
-  }
-  export -f dot_file_log
+# q # echo $(date +"%y-%m-%d %H:%M:%S") ".profile: \$BASH=$BASH, definining function .tq84-dotfile-log()" >> ~/.dotfile-sequence.log
+# q .tq84-dotfile-log() { # {
+# q   local script_name=$1
+# q   local text=$2
+# q   echo $(date +"%y-%m-%d %H:%M:%S") $script_name: $text >> ~/.dotfile-sequence.log
+# q } # }
+# q 
+# q if [ "$BASH" ]; then # {
+# q   export -f .tq84-dotfile-log
+# q 
+# q   .tq84-dotfile-log .profile "BASH existed, function dot_file_log created and exported"
+# q 
+# q fi # }
 
-  dot_file_log .profile "BASH existed, function dot_file_log created and exported"
-
-fi # }
+. ~/.tq84-dotfile-log .profile "\$SHELL=$SHELL"
 
 # { Environment variables
 export TZ=Europe/Zurich
@@ -27,20 +31,20 @@ export EDITOR=gvim
 if [[ -d ~/github ]]; then # {
    export github_top_root=~/github/
    export github_root=${github_top_root}github/
-   dot_file_log .profile "github_top_root=$github_top_root, github_root=$github_root"
+   . ~/.tq84-dotfile-log .profile "github_top_root=$github_top_root, github_root=$github_root"
 fi # }
 
 if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
   export VIMRUNTIME=${github_root}vim/runtime
-  dot_file_log .profile "exported VIMRUNTIME=$VIMRUNTIME"
+  . ~/.tq84-dotfile-log .profile "exported VIMRUNTIME=$VIMRUNTIME"
 fi # }
 
 
 # }
 
-dot_file_log .profile "\$BASH=$BASH"
+. ~/.tq84-dotfile-log .profile "\$BASH=$BASH"
 if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
-    dot_file_log .profile "It's a bash and ~/.bashrc exists, so sourcing it"
+    . ~/.tq84-dotfile-log .profile "It's a bash and ~/.bashrc exists, so sourcing it"
     . ~/.bashrc
 fi # }
 
@@ -49,22 +53,22 @@ if [ -d "$HOME/bin" ] ; then # {
 fi # }
 
 if [ -r ~/.ls_colors ]; then # {
-  dot_file_log .profile "~/.ls_colors is readable, so sourcing it"
+  . ~/.tq84-dotfile-log .profile "~/.ls_colors is readable, so sourcing it"
   . ~/.ls_colors
 else
-  dot_file_log .profile "~/.ls_colors is NOT readable"
+  . ~/.tq84-dotfile-log .profile "~/.ls_colors is NOT readable"
 fi # }
 
 if [ -d /u01/app/oracle ]; then # 2018-01-31 { Oracle
 
   export ORACLE_BASE=/u01/app/oracle
-  dot_file_log .profile "/u01/app/oracle exists, exporting ORACLE_BASE=$ORACLE_BASE"
+  . ~/.tq84-dotfile-log .profile "/u01/app/oracle exists, exporting ORACLE_BASE=$ORACLE_BASE"
 
-  if [ -d $ORACLE_BASE/product/*/*1 ]; then
+  if [ -d $ORACLE_BASE/product/*/*1 ]; then # {
 
 #    export ORACLE_HOME=($ORACLE_BASE/product/*/*1)  # Parentheses used in order to expand the stars: https://stackoverflow.com/a/104023/180275
      export ORACLE_HOME=$(ls -1d $ORACLE_BASE/product/*/*1)
-     dot_file_log .profile "$ORACLE_BASE/product/12.2.0/*1 exists, exporting ORACLE_HOME=$ORACLE_HOME"
+     . ~/.tq84-dotfile-log .profile "$ORACLE_BASE/product/12.2.0/*1 exists, exporting ORACLE_HOME=$ORACLE_HOME"
 
      export ORACLE_SID=ORA12
      export ORACLE_UNQNAME=ORA12              # Apparently used for $ORACLE_BASE/diag/rdbms/$ORACLE_UNQNAME/$ORACLE_SID/trace
@@ -76,15 +80,31 @@ if [ -d /u01/app/oracle ]; then # 2018-01-31 { Oracle
       #  Apparently, ORACLE_PATH, rather than SQLPATH is needed nowadays.
       #  export SQLPATH=$github_root/oracle_scriptlets/sqlpath
          export ORACLE_PATH=${github_root}oracle_scriptlets/sqlpath
-         dot_file_log .profile "$github_root/oracle_scriptlets/sqlpath exists, exporting ORACLE_PATH=$ORACLE_PATH"
+         . ~/.tq84-dotfile-log .profile "$github_root/oracle_scriptlets/sqlpath exists, exporting ORACLE_PATH=$ORACLE_PATH"
      else
-         dot_file_log .profile "$github_root/oracle_scriptlets/sqlpath does not exist"
+         . ~/.tq84-dotfile-log .profile "$github_root/oracle_scriptlets/sqlpath does not exist"
      fi
   fi # }
 
 fi # }
 
 
+if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
+# 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
+  if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
+
+   . ~/.tq84-dotfile-log .profile "hostname = $(hostname)"
+    if [[ "$(hostname)" != "L2" ]]; then 
+      ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
+      . ~/.tq84-dotfile-log .profile "executed ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+    else
+      . ~/.tq84-dotfile-log .profile "did not execute ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+    fi
+  else
+    . ~/.tq84-dotfile-log .profile "${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!"
+  fi # }
+
+fi 
 # best privacy
 umask 077
 
