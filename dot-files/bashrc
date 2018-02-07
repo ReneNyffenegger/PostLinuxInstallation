@@ -61,9 +61,9 @@ export_var_if_dir_exists() { # {
 
   if [[ -d "$dir" ]]; then
       export $var="$dir"
-      . ~/.tq84-dotfile-log .profile "$dir exists, exported $var to $dir"
+      . ~/.tq84-dotfile-log .bashrc "$dir exists, exported $var to $dir"
   else
-      . ~/.tq84-dotfile-log .profile "$dir does not exist, not exporting $var"
+      . ~/.tq84-dotfile-log .bashrc "$dir does not exist, not exporting $var"
   fi
 } # }
 
@@ -73,8 +73,11 @@ export_var_if_dir_exists ~/LDP/                 ldp_dir
 export_var_if_dir_exists ~/renenyffenegger.ch/  rn_root
 
 
-if [ -d ~/github/lib/scripts ]; then # {
-  export PATH=~/github/lib/scripts:$PATH
+if [ -d ${github_top_root}lib/scripts ]; then # {
+  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
+  export PATH=${github_top_root}lib/scripts:$PATH
+else
+  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
 fi # }
 
 if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
