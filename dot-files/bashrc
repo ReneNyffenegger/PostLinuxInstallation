@@ -109,6 +109,13 @@ if [ "$ORACLE_HOME" ]; then
   alias diag="cd $ORACLE_BASE/diag/rdbms/$ORACLE_UNQNAME/$ORACLE_SID/trace"
 
 fi # }
+if command -v R > /dev/null; then # {
+  . ~/.tq84-dotfile-log .bashrc "R executable found"
+  r() {
+    R --vanilla --slave -f "$1"
+  }
+
+fi # }
 
 # shopt {
 
