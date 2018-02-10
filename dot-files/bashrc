@@ -112,7 +112,13 @@ fi # }
 if command -v R > /dev/null; then # {
   . ~/.tq84-dotfile-log .bashrc "R executable found"
   r() {
-    R --vanilla --slave -f "$1"
+    if [[ -z "$1" ]]; then
+    #  starting an r session
+       R --no-save
+    else
+    #  starting an r script
+       R --vanilla --slave -f "$1"
+    fi
   }
 
 fi # }
