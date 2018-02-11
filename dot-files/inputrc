@@ -1,8 +1,6 @@
 #
 #   http://renenyffenegger.ch/notes/Linux/shell/readline/initialization-file
 #
-set editing-mode vi
-",ltr": "ls -ltr "
 
 # http://www.humbug.in/2010/enable-alt-key-in-xterm/ {
 
@@ -20,4 +18,13 @@ set input-meta   on
 #   Apparently, meta-flag is a synonym for input-meta
 set meta-flag    on
 
+
 # }
+
+set editing-mode vi
+",ltr": "ls -ltr "
+
+# Do not bell on tab-completion.
+#       As for now commented, because nothing
+#       can be heard anyway.
+# set bell-style none
