@@ -1,4 +1,9 @@
-sudo apt install make
+if command -v make > /dev/null; then
+   echo make is installed
+else
+   echo make is not installed
+   sudo apt install make
+fi
 
 sudo cpan Digest::MD5::File
 sudo cpan File::Which
