@@ -12,3 +12,4 @@ sudo pacman -Sy mesa # mesa provides the DRI driver for 3D acceleration
 sudo pacman -Sy openbox
 sudo pacman -Sy tint2
 sudo pacman -Sy ttf-dejavu
+sudo pacman -Sy xterm
