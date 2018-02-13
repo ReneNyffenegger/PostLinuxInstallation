@@ -1,3 +1,7 @@
+#
+#  Apparently, cpan should not be run on arch!
+#
+
 if command -v make > /dev/null; then
    echo make is installed
 else
