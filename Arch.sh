@@ -2,3 +2,4 @@
 #   To do same thing temporarily: sudo rmmod pcspkr
 sudo sh -c 'echo "blacklist pcspkr" > /etc/modprobe.d/nobeeb.conf'
 
+sudo pacman -Sy zip unzip
