@@ -317,8 +317,11 @@ removeLastPartOfPath() { # {
   #
   # Used together with key binding to ctrl-q below.
 
-  if [[ $READLINE_LINE =~ (.*)/ ]]; then
+  if [[ $READLINE_LINE =~ (.*)/$ ]]; then
      READLINE_LINE="${BASH_REMATCH[1]}"
+  fi
+  if [[ $READLINE_LINE =~ (.*)/ ]]; then
+     READLINE_LINE="${BASH_REMATCH[1]}/"
   fi
 } # }
 
