@@ -27,7 +27,7 @@ fi # }
 
 # { PATH
 
-if [ -d ${github_top_root}lib/sripts ]; then # {
+if [ -d ${github_top_root}lib/scripts ]; then # {
   . ~/.tq84-dotfile-log .profile "${github_top_root}lib/scripts exists, adding it to PATH"
   export PATH=${github_top_root}lib/scripts:$PATH
 else
