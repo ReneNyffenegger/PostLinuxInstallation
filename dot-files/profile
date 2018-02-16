@@ -28,10 +28,10 @@ fi # }
 # { PATH
 
 if [ -d ${github_top_root}lib/sripts ]; then # {
-  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
+  . ~/.tq84-dotfile-log .profile "${github_top_root}lib/scripts exists, adding it to PATH"
   export PATH=${github_top_root}lib/scripts:$PATH
 else
-  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
+  . ~/.tq84-dotfile-log .profile "${github_top_root}lib/scripts does not exist"
 fi # }
 
 if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
@@ -41,6 +41,8 @@ fi # }
 if [ -d "$HOME/bin" ] ; then # {
     PATH="$HOME/bin:$PATH"
 fi # }
+
+  . ~/.tq84-dotfile-log .profile "PATH=$PATH"
 
 # }
 
