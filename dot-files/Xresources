@@ -1,7 +1,7 @@
 !
-!   source this file with
-!       #include "${github_root}PostLinuxInstallation/dot-files/Xresources"
-!   in ~/.Xresource
+! 2018-02-16 : source this file with
+!   it's now :     #include "${github_root}PostLinuxInstallation/dot-files/Xresources"
+!  symlinked : in ~/.Xresource
 ! 
 
 !
