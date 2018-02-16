@@ -73,16 +73,18 @@ export_var_if_dir_exists ~/LDP/                 ldp_dir
 export_var_if_dir_exists ~/renenyffenegger.ch/  rn_root
 
 
-if [ -d ${github_top_root}lib/scripts ]; then # {
-  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
-  export PATH=${github_top_root}lib/scripts:$PATH
-else
-  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
-fi # }
-
-if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
-  export PATH=~/localgit/scripts:$PATH
-fi # }
+# q 2018-02-16 moved to profile
+# q
+# q if [ -d ${github_top_root}lib/sripts ]; then # {
+# q   . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
+# q   export PATH=${github_top_root}lib/scripts:$PATH
+# q else
+# q   . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
+# q fi # }
+# q 
+# q if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
+# q   export PATH=~/localgit/scripts:$PATH
+# q fi # }
 
 
 if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir, hd_mount_point

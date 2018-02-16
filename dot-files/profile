@@ -8,20 +8,6 @@
 # exists.
 
 
-# q # echo $(date +"%y-%m-%d %H:%M:%S") ".profile: \$BASH=$BASH, definining function .tq84-dotfile-log()" >> ~/.dotfile-sequence.log
-# q .tq84-dotfile-log() { # {
-# q   local script_name=$1
-# q   local text=$2
-# q   echo $(date +"%y-%m-%d %H:%M:%S") $script_name: $text >> ~/.dotfile-sequence.log
-# q } # }
-# q 
-# q if [ "$BASH" ]; then # {
-# q   export -f .tq84-dotfile-log
-# q 
-# q   .tq84-dotfile-log .profile "BASH existed, function dot_file_log created and exported"
-# q 
-# q fi # }
-
 . ~/.tq84-dotfile-log .profile "\$SHELL=$SHELL"
 
 # { Environment variables
@@ -39,6 +25,24 @@ if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
   . ~/.tq84-dotfile-log .profile "exported VIMRUNTIME=$VIMRUNTIME"
 fi # }
 
+# { PATH
+
+if [ -d ${github_top_root}lib/sripts ]; then # {
+  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
+  export PATH=${github_top_root}lib/scripts:$PATH
+else
+  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
+fi # }
+
+if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
+  export PATH=~/localgit/scripts:$PATH
+fi # }
+
+if [ -d "$HOME/bin" ] ; then # {
+    PATH="$HOME/bin:$PATH"
+fi # }
+
+# }
 
 # }
 
@@ -48,9 +52,6 @@ if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
     . ~/.bashrc
 fi # }
 
-if [ -d "$HOME/bin" ] ; then # {
-    PATH="$HOME/bin:$PATH"
-fi # }
 
 if [ -r ~/.ls_colors ]; then # {
   . ~/.tq84-dotfile-log .profile "~/.ls_colors is readable, so sourcing it"
