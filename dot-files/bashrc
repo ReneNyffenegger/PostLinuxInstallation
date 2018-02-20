@@ -300,6 +300,30 @@ function mdcd() { # mkdir and cd into it
   cd    "$dir"
 } # }
 
+akw() { # {
+
+#
+#  Prints the indicated fields that is seperated by whitespaces
+#
+#  examples
+#    echo foo bar baz | akw 2
+#    mount < akw 1 3
+#
+
+  local field_nos="$@"
+  local STDIN;
+
+  field_nos=$( echo "$field_nos" | sed 's/\([[:digit:]]\+\)/\$\1/g' )
+  field_nos=$( echo "$field_nos" | sed 's/ / \" \" /g' )
+
+  echo field_nos=$field_nos
+  
+  while read STDIN; do
+      echo "$STDIN" | awk "{ print $field_nos }";
+  done;
+
+} # }
+
 function vwh() { # view (executable) script
   local f=$(which $1)
   if [ ! -f "$f" ]; then
