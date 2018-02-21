@@ -12,7 +12,13 @@
 
 # { Environment variables
 export TZ=Europe/Zurich
-export EDITOR=gvim
+
+if   command -v gvim; then export EDITOR='gvim --nofork'
+elif command -v  vim; then export EDITOR=vim
+fi
+
+. ~/.tq84-dotfile-log .profile "EDITOR=$EDITOR"
+
 
 if [[ -d ~/github ]]; then # {
    export github_top_root=~/github/
