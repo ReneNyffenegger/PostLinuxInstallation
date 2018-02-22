@@ -6,7 +6,7 @@
 #
 . ~/.tq84-dotfile-sequence .bashrc
 
-. ~/.tq84-dotfile-log .bashrc: "\$- = $-" >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc: "\$- = $-" # >> ~/.dotfile-sequence.log
 
 
 if [[ "$-" != *i* ]]; then # { Check for interactive execution
@@ -39,13 +39,49 @@ set -o vi
 # PS1 {
 # username @ hostname
 
-. ~/.tq84-dotfile-log .bashrc: \$TERM=$TERM >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc: \$TERM=$TERM # >> ~/.dotfile-sequence.log
 case "$TERM" in
 # 2018-02-22  xterm-color|*-256color) color_prompt=yes;;
                     xterm|*-256color) color_prompt=yes;;
 esac
 
-if [ "$color_prompt" = yes ]; then
+check_color_support() {
+  #
+  #   Found at https://github.com/l0b0/xterm-color-count/blob/master/xterm-color-count.sh
+  #
+  printf '\e]4;%d;?\a' 0
+  read -d $'\a' -s -t 0.1 </dev/tty
+  if [ -z "$REPLY" ]; then
+      . ~/.tq84-dotfile-log .bashrc "OSC 4 not supported, so we'll fall back to terminfo"
+      max=$(tput colors)
+  else
+      . ~/.tq84-dotfile-log .bashrc "OSC 4 not supported, do a binary search"
+      local min=0
+      local max=256
+      while [[ $((min+1)) -lt $max ]]; do
+        i=$(( (min+max)/2 ))
+        printf '\e]4;%d;?\a' $i
+        read -d $'\a' -s -t 0.1 </dev/tty
+        if [ -z "$REPLY" ]; then
+          max=$i
+        else
+          min=$i
+        fi
+      done
+  fi
+  . ~/.tq84-dotfile-log .bashrc "check_color_support: max=$max, min=$min"
+
+  if [[ $max -gt 8 ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+if check_color_support; then #_{
+
+
+  . ~/.tq84-dotfile-log .bashrc "Colors seem to be supported"
 
     prompt_check_exit_value() {
     #
@@ -67,7 +103,7 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
-unset color_prompt
+unset check_color_support
 # }
 
 export_var_if_dir_exists() { # {
