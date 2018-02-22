@@ -41,13 +41,28 @@ set -o vi
 
 . ~/.tq84-dotfile-log .bashrc: \$TERM=$TERM >> ~/.dotfile-sequence.log
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+# 2018-02-22  xterm-color|*-256color) color_prompt=yes;;
+                    xterm|*-256color) color_prompt=yes;;
 esac
 
 if [ "$color_prompt" = yes ]; then
-#   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+    prompt_check_exit_value() {
+    #
+    # check the last exit value
+    # turn red if not 0.
+    #
+      local e=$?
+      if [[ $e != 0 ]]; then
+        echo -e "\e[1m\e[31m\$? = $e\e[0m"
+      fi
+    }
+
+ # The contents of PROMPT_COMMAND is executed as a regular Bash command just before Bash displays a prompt. 
+   PROMPT_COMMAND=prompt_check_exit_value
 #
-    PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\! \$ "
+   # use \w for working directory
+   PS1='\e[32m\u @ \h \e[33m\w\e[0m\n\e[36m\!\e[0m \$ '
 #               \w set xterm's title to current working dir ???
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
