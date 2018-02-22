@@ -94,7 +94,7 @@ if check_color_support; then #_{
     fi
   }
   red_if_root() {
-    if [ $EUID ]; then
+    if [[ $EUID -eq 0 ]]; then
       echo -e "\e[1m\e[31m"
     fi
   }
