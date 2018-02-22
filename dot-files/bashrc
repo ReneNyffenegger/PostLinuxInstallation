@@ -96,9 +96,10 @@ if check_color_support; then #_{
 
  # The contents of PROMPT_COMMAND is executed as a regular Bash command just before Bash displays a prompt. 
    PROMPT_COMMAND=prompt_check_exit_value
-#
-   # use \w for working directory
-   PS1='\e[32m\u @ \h \e[33m\w\e[0m\n\e[36m\!\e[0m \$ '
+
+ # Enclose zero length color specifiers with \[ … \] ( https://unix.stackexchange.com/a/28828/6479 )
+ # use \w for working directory
+   PS1='\[\e[32\]m\u @ \h \[\e[33m\]\w\[\e[0m\]\n\[\e[36m\]\!\[\e[0m\] \$ '
 #               \w set xterm's title to current working dir ???
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
