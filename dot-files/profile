@@ -100,18 +100,23 @@ fi # }
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 # 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
-  if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
 
-   . ~/.tq84-dotfile-log .profile "hostname = $(hostname)"
-    if [[ "$(hostname)" != "L2" ]]; then 
-      ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
-      . ~/.tq84-dotfile-log .profile "executed ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+  if [ ! -z "$XTERM" ]; then
+    if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
+  
+     . ~/.tq84-dotfile-log .profile "hostname = $(hostname)"
+      if [[ "$(hostname)" != "L2" ]]; then 
+        ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
+        . ~/.tq84-dotfile-log .profile "executed ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+      else
+        . ~/.tq84-dotfile-log .profile "did not execute ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+      fi
     else
-      . ~/.tq84-dotfile-log .profile "did not execute ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
-    fi
+      . ~/.tq84-dotfile-log .profile "${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!"
+    fi # }
   else
-    . ~/.tq84-dotfile-log .profile "${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!"
-  fi # }
+    . ~/.tq84-dotfile-log .profile "XTERM not set, not running change-layout.sh"
+  fi 
 
 fi 
 # best privacy
