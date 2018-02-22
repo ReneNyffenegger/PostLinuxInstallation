@@ -1,4 +1,5 @@
-if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
+# if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
+if command -v lsb_release; then
     echo $(lsb_release -i | cut -d: -f2 | sed s/'^\t'//)
 elif [ -f /etc/os-release ]; then
     echo $( . /etc/os-release; echo $NAME ) 

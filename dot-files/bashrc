@@ -71,7 +71,7 @@ check_color_support() {
   fi
   . ~/.tq84-dotfile-log .bashrc "check_color_support: max=$max, min=$min"
 
-  if [[ $max -gt 8 ]]; then
+  if [[ $max -ge 8 ]]; then
     return 0
   else
     return 1
