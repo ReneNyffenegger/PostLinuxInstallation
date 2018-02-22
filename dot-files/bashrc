@@ -83,23 +83,28 @@ if check_color_support; then #_{
 
   . ~/.tq84-dotfile-log .bashrc "Colors seem to be supported"
 
-    prompt_check_exit_value() {
-    #
-    # check the last exit value
-    # turn red if not 0.
-    #
-      local e=$?
-      if [[ $e != 0 ]]; then
-        echo -e "\e[1m\e[31m\$? = $e\e[0m"
-      fi
-    }
+  prompt_check_exit_value() {
+  #
+  # check the last exit value
+  # turn red if not 0.
+  #
+    local e=$?
+    if [[ $e != 0 ]]; then
+      echo -e "\e[1m\e[31m\$? = $e\e[0m"
+    fi
+  }
+  red_if_root() {
+    if [ $EUID ]; then
+      echo -e "\e[1m\e[31m"
+    fi
+  }
 
  # The contents of PROMPT_COMMAND is executed as a regular Bash command just before Bash displays a prompt. 
    PROMPT_COMMAND=prompt_check_exit_value
 
  # Enclose zero length color specifiers with \[ … \] ( https://unix.stackexchange.com/a/28828/6479 )
  # use \w for working directory
-   PS1='\[\e[32\]m\u @ \h \[\e[33m\]\w\[\e[0m\]\n\[\e[36m\]\!\[\e[0m\] \$ '
+   PS1='\[\e[32\]m$(red_if_root)\u\[\e[32m\] @ \h \[\e[33m\]\w\[\e[0m\]\n\[\e[36m\]\!\[\e[0m\] $(red_if_root)\$\[\e[0m\] '
 #               \w set xterm's title to current working dir ???
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
