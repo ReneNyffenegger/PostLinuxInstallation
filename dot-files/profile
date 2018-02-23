@@ -13,8 +13,8 @@
 # { Environment variables
 export TZ=Europe/Zurich
 
-if   command -v gvim; then export EDITOR='gvim --nofork'
-elif command -v  vim; then export EDITOR=vim
+if   command -v gvim > /dev/null; then export EDITOR='gvim --nofork'
+elif command -v  vim > /dev/null; then export EDITOR=vim
 fi
 
 . ~/.tq84-dotfile-log .profile "EDITOR=$EDITOR"
