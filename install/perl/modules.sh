@@ -24,16 +24,17 @@ install_module() {
     fi
 
   else
-     echo sudo cpan $module_name
+     sudo cpan $module_name
   fi
      
 }
 
-install_module Digest::MD5::File         todo
-install_module File::Which               todo
-install_module File::HomeDir             todo
-install_module File::Touch               todo
-install_module File::DirList             todo
-install_module Net::FTP::File            todo
-install_module LWP::Protocoll::https     perl-lwp-protocol-https  # TODO: apparently already installed on Ubuntu...
-install_module Yaml::Tiny                perl-yaml-tiny           # TODO: apparently already installed on Ubuntu...
+# install_module Digest::MD5::File         todo
+# install_module File::Which               todo
+# install_module File::HomeDir             todo
+# install_module File::Touch               todo
+# install_module File::DirList             todo
+# install_module Net::FTP::File            todo
+# install_module LWP::Protocoll::https     perl-lwp-protocol-https  # TODO: apparently already installed on Ubuntu...
+# install_module Yaml::Tiny                perl-yaml-tiny           # TODO: apparently already installed on Ubuntu...
+install_module Archive::Extract          todo
