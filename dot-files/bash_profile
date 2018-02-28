@@ -3,15 +3,15 @@
 . ~/.tq84-dotfile-sequence .bash_profile
 
 if  [[ -r ~/.profile ]]; then
-        . ~/.tq84-dotfile-log .bash_profile: ~/.profile exists, sourcing it >> ~/.dotfile-sequence.log
+        . ~/.tq84-dotfile-log .bash_profile: "~/.profile exists, sourcing it"
         . ~/.profile
 fi
 
 . ~/.tq84-dotfile-log .bash_profile \$-=$-
 case "$-" in *i*)
-   . ~/.tq84-dotfile-log .bash_profile: \$- indicates an interactive shell  >> ~/.dotfile-sequence.log
+   . ~/.tq84-dotfile-log .bash_profile "\$- indicates an interactive shell"
    if [ -r ~/.bashrc ]; then
-         echo $(date) - .bash_profile: ~/.bashrc exists, sourcing it >> ~/.dotfile-sequence.log
+         . ~/.tq84-dotfile-log .bash_profile: "~/.bashrc exists, sourcing it"
          . ~/.bashrc;
    fi;;
 esac

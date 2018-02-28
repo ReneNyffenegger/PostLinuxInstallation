@@ -6,7 +6,7 @@
 #
 . ~/.tq84-dotfile-sequence .bashrc
 
-. ~/.tq84-dotfile-log .bashrc: "\$- = $-" >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc: "\$- = $-" # >> ~/.dotfile-sequence.log
 
 
 if [[ "$-" != *i* ]]; then # { Check for interactive execution
@@ -39,20 +39,82 @@ set -o vi
 # PS1 {
 # username @ hostname
 
-. ~/.tq84-dotfile-log .bashrc: \$TERM=$TERM >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc: \$TERM=$TERM # >> ~/.dotfile-sequence.log
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+# 2018-02-22  xterm-color|*-256color) color_prompt=yes;;
+                    xterm|*-256color) color_prompt=yes;;
 esac
 
-if [ "$color_prompt" = yes ]; then
-#   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-#
-    PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\! \$ "
-#               \w set xterm's title to current working dir ???
+check_color_support() {
+  #
+  #   Found at https://github.com/l0b0/xterm-color-count/blob/master/xterm-color-count.sh
+  #
+  printf '\e]4;%d;?\a' 0
+  read -d $'\a' -s -t 0.1 </dev/tty
+  if [ -z "$REPLY" ]; then
+      . ~/.tq84-dotfile-log .bashrc "OSC 4 not supported, so we'll fall back to terminfo"
+      max=$(tput colors)
+  else
+      . ~/.tq84-dotfile-log .bashrc "OSC 4 not supported, do a binary search"
+      local min=0
+      local max=256
+      while [[ $((min+1)) -lt $max ]]; do
+        i=$(( (min+max)/2 ))
+        printf '\e]4;%d;?\a' $i
+        read -d $'\a' -s -t 0.1 </dev/tty
+        if [ -z "$REPLY" ]; then
+          max=$i
+        else
+          min=$i
+        fi
+      done
+  fi
+  . ~/.tq84-dotfile-log .bashrc "check_color_support: max=$max, min=$min"
+
+  if [[ $max -ge 8 ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+if check_color_support; then #_{
+
+# export term_red='\e[31m'
+# export term_nocol='\e[0m'
+
+
+  . ~/.tq84-dotfile-log .bashrc "Colors seem to be supported"
+
+  prompt_check_exit_value() {
+  #
+  # check the last exit value
+  # turn red if not 0.
+  #
+    local e=$?
+    if [[ $e != 0 ]]; then
+      echo -e "\e[1;31m\$? = $e\e[0m" # 1: bold, 31: red, 0: no col
+    fi
+  }
+  red_if_root() {
+    if [[ $EUID -eq 0 ]]; then
+      echo -e "\e[1m\e[31m"
+#     2018-02-25: echo "\[$(echo -e "\e[1;31m")\]"   # 1: bold, 31: red
+    fi
+  }
+
+ # The contents of PROMPT_COMMAND is executed as a regular Bash command just before Bash displays a prompt. 
+   PROMPT_COMMAND=prompt_check_exit_value
+
+ # Enclose zero length color specifiers with \[ … \] ( https://unix.stackexchange.com/a/28828/6479 )
+ # use \w for working directory
+#  2018-02-25 PS1='\[\e[32m\]$(red_if_root)\u\[\e[0;32m\] @ \h \[\e[33m\]\w\[\e[0m\]\n\[\e[36m\]\!\[\e[0m\] $(red_if_root)\$\[\e[0m\] '
+   PS1='\[\e[32m$(red_if_root)\]\u\[\e[0;32m\] @ \h \[\e[33m\]\w\[\e[0m\]\n\[\e[36m\]\!\[\e[0m\] $(red_if_root)\$\[\e[0m\] '
+
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
-unset color_prompt
+unset check_color_support
 # }
 
 export_var_if_dir_exists() { # {
@@ -73,16 +135,18 @@ export_var_if_dir_exists ~/LDP/                 ldp_dir
 export_var_if_dir_exists ~/renenyffenegger.ch/  rn_root
 
 
-if [ -d ${github_top_root}lib/scripts ]; then # {
-  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
-  export PATH=${github_top_root}lib/scripts:$PATH
-else
-  . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
-fi # }
-
-if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
-  export PATH=~/localgit/scripts:$PATH
-fi # }
+# q 2018-02-16 moved to profile
+# q
+# q if [ -d ${github_top_root}lib/sripts ]; then # {
+# q   . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
+# q   export PATH=${github_top_root}lib/scripts:$PATH
+# q else
+# q   . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
+# q fi # }
+# q 
+# q if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
+# q   export PATH=~/localgit/scripts:$PATH
+# q fi # }
 
 
 if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir, hd_mount_point
@@ -298,6 +362,30 @@ function mdcd() { # mkdir and cd into it
   cd    "$dir"
 } # }
 
+akw() { # {
+
+#
+#  Prints the indicated fields that is seperated by whitespaces
+#
+#  examples
+#    echo foo bar baz | akw 2
+#    mount < akw 1 3
+#
+
+  local field_nos="$@"
+  local STDIN;
+
+  field_nos=$( echo "$field_nos" | sed 's/\([[:digit:]]\+\)/\$\1/g' )
+  field_nos=$( echo "$field_nos" | sed 's/ / \" \" /g' )
+
+  echo field_nos=$field_nos
+  
+  while read STDIN; do
+      echo "$STDIN" | awk "{ print $field_nos }";
+  done;
+
+} # }
+
 function vwh() { # view (executable) script
   local f=$(which $1)
   if [ ! -f "$f" ]; then
@@ -315,8 +403,11 @@ removeLastPartOfPath() { # {
   #
   # Used together with key binding to ctrl-q below.
 
-  if [[ $READLINE_LINE =~ (.*)/ ]]; then
+  if [[ $READLINE_LINE =~ (.*)/$ ]]; then
      READLINE_LINE="${BASH_REMATCH[1]}"
+  fi
+  if [[ $READLINE_LINE =~ (.*)/ ]]; then
+     READLINE_LINE="${BASH_REMATCH[1]}/"
   fi
 } # }
 
@@ -339,3 +430,17 @@ bind -x '"\C-q": removeLastPartOfPath'
 # bind TAB:insert-completions
 #    default seems to be
 # bin TAB:complete
+
+# { Arch Linux CPAN nuisance:
+
+if [[ $(hostname) == 'L1' ]]; then
+
+   . ~/.tq84-dotfile-log .bashrc "hostname=L1, doing the Arch Linux CPAN nuisance"
+   
+   PATH="/home/rene/perl5/bin${PATH:+:${PATH}}"; export PATH;
+   PERL5LIB="/home/rene/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+   PERL_LOCAL_LIB_ROOT="/home/rene/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+   PERL_MB_OPT="--install_base \"/home/rene/perl5\""; export PERL_MB_OPT;
+   PERL_MM_OPT="INSTALL_BASE=/home/rene/perl5"; export PERL_MM_OPT;
+
+fi # }

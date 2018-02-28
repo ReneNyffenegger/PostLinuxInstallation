@@ -8,25 +8,17 @@
 # exists.
 
 
-# q # echo $(date +"%y-%m-%d %H:%M:%S") ".profile: \$BASH=$BASH, definining function .tq84-dotfile-log()" >> ~/.dotfile-sequence.log
-# q .tq84-dotfile-log() { # {
-# q   local script_name=$1
-# q   local text=$2
-# q   echo $(date +"%y-%m-%d %H:%M:%S") $script_name: $text >> ~/.dotfile-sequence.log
-# q } # }
-# q 
-# q if [ "$BASH" ]; then # {
-# q   export -f .tq84-dotfile-log
-# q 
-# q   .tq84-dotfile-log .profile "BASH existed, function dot_file_log created and exported"
-# q 
-# q fi # }
-
 . ~/.tq84-dotfile-log .profile "\$SHELL=$SHELL"
 
 # { Environment variables
 export TZ=Europe/Zurich
-export EDITOR=gvim
+
+if   command -v gvim > /dev/null; then export EDITOR='gvim --nofork'
+elif command -v  vim > /dev/null; then export EDITOR=vim
+fi
+
+. ~/.tq84-dotfile-log .profile "EDITOR=$EDITOR"
+
 
 if [[ -d ~/github ]]; then # {
    export github_top_root=~/github/
@@ -39,6 +31,26 @@ if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
   . ~/.tq84-dotfile-log .profile "exported VIMRUNTIME=$VIMRUNTIME"
 fi # }
 
+# { PATH
+
+if [ -d ${github_top_root}lib/scripts ]; then # {
+  . ~/.tq84-dotfile-log .profile "${github_top_root}lib/scripts exists, adding it to PATH"
+  export PATH=${github_top_root}lib/scripts:$PATH
+else
+  . ~/.tq84-dotfile-log .profile "${github_top_root}lib/scripts does not exist"
+fi # }
+
+if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
+  export PATH=~/localgit/scripts:$PATH
+fi # }
+
+if [ -d "$HOME/bin" ] ; then # {
+    PATH="$HOME/bin:$PATH"
+fi # }
+
+  . ~/.tq84-dotfile-log .profile "PATH=$PATH"
+
+# }
 
 # }
 
@@ -48,9 +60,6 @@ if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
     . ~/.bashrc
 fi # }
 
-if [ -d "$HOME/bin" ] ; then # {
-    PATH="$HOME/bin:$PATH"
-fi # }
 
 if [ -r ~/.ls_colors ]; then # {
   . ~/.tq84-dotfile-log .profile "~/.ls_colors is readable, so sourcing it"
@@ -91,18 +100,23 @@ fi # }
 
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 # 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
-  if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
 
-   . ~/.tq84-dotfile-log .profile "hostname = $(hostname)"
-    if [[ "$(hostname)" != "L2" ]]; then 
-      ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
-      . ~/.tq84-dotfile-log .profile "executed ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+  if [ ! -z "$XTERM" ]; then
+    if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
+  
+     . ~/.tq84-dotfile-log .profile "hostname = $(hostname)"
+      if [[ "$(hostname)" != "L2" ]]; then 
+        ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
+        . ~/.tq84-dotfile-log .profile "executed ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+      else
+        . ~/.tq84-dotfile-log .profile "did not execute ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
+      fi
     else
-      . ~/.tq84-dotfile-log .profile "did not execute ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh"
-    fi
+      . ~/.tq84-dotfile-log .profile "${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!"
+    fi # }
   else
-    . ~/.tq84-dotfile-log .profile "${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!"
-  fi # }
+    . ~/.tq84-dotfile-log .profile "XTERM not set, not running change-layout.sh"
+  fi 
 
 fi 
 # best privacy
