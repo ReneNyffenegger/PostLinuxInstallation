@@ -334,3 +334,8 @@ bind -x '"\C-q": removeLastPartOfPath'
 # }
 
 # }
+
+#    https://stackoverflow.com/a/821226/180275
+# bind TAB:insert-completions
+#    default seems to be
+# bin TAB:complete
