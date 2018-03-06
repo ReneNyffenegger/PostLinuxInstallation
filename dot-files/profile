@@ -122,10 +122,10 @@ fi
 
 if [ $EUID != 0 ]; then
   # best privacy
-  lfs_log .profile "Setting umask to 077, was $(umask) for non root user $EUID"
+  . ~/.tq84-dotfile-log .profile "Setting umask to 077, was $(umask) for non root user $EUID"
   umask 077
 else
-  lfs_log .profile "Setting umask to 022, was $(umask) for root user $EUID"
+  . ~/.tq84-dotfile-log .profile "Setting umask to 022, was $(umask) for root user $EUID"
 fi
 
 true
