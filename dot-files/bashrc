@@ -255,7 +255,7 @@ if   [ "$(uname)" == "Darwin" ]; then #_{ Mac OS
 #_}
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then #_{
 
-  alias v='gvim'
+  alias v='$EDITOR'
 
 # 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
   if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then #_{ key -> change-layout.sh
