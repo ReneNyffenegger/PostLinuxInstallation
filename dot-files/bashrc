@@ -9,7 +9,7 @@
 . ~/.tq84-dotfile-log .bashrc: "\$- = $-" # >> ~/.dotfile-sequence.log
 
 
-if [[ "$-" != *i* ]]; then # { Check for interactive execution
+if [[ "$-" != *i* ]]; then #_{ Check for interactive execution
 # If not running interactively, don't do anything.
 # .bashrc is also read during non-interactive SSH command
 # execution which is why it has a check at the beginning
@@ -24,7 +24,7 @@ if [[ "$-" != *i* ]]; then # { Check for interactive execution
   .tq84-dotfile-log .bashrc "is not running interactively, so returning"
   return
 
-fi # }
+fi #_}
 
 . ~/.tq84-dotfile-log .bashrc "Apparently running interactively, going on with script"
 
@@ -45,7 +45,7 @@ case "$TERM" in
                     xterm|*-256color) color_prompt=yes;;
 esac
 
-check_color_support() {
+check_color_support() { #_{
   #
   #   Found at https://github.com/l0b0/xterm-color-count/blob/master/xterm-color-count.sh
   #
@@ -76,7 +76,7 @@ check_color_support() {
   else
     return 1
   fi
-}
+} #_}
 
 if check_color_support; then #_{
 
@@ -115,9 +115,9 @@ else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset check_color_support
-# }
+#_}
 
-export_var_if_dir_exists() { # {
+export_var_if_dir_exists() { #_{
   local dir=$1
   local var=$2
 
@@ -127,7 +127,7 @@ export_var_if_dir_exists() { # {
   else
       . ~/.tq84-dotfile-log .bashrc "$dir does not exist, not exporting $var"
   fi
-} # }
+} #_}
 
 export_var_if_dir_exists ~/localgit/            git_work_dir
 export_var_if_dir_exists ~/Digitales-Backup/    digitales_backup
@@ -137,19 +137,19 @@ export_var_if_dir_exists ~/renenyffenegger.ch/  rn_root
 
 # q 2018-02-16 moved to profile
 # q
-# q if [ -d ${github_top_root}lib/sripts ]; then # {
+# q if [ -d ${github_top_root}lib/sripts ]; then #_{
 # q   . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts exits, adding it to PATH"
 # q   export PATH=${github_top_root}lib/scripts:$PATH
 # q else
 # q   . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
-# q fi # }
+# q fi #_}
 # q 
-# q if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
+# q if [ -d ~/localgit/scripts ]; then #_{ add ~/localgit/scripts to PATH
 # q   export PATH=~/localgit/scripts:$PATH
-# q fi # }
+# q fi #_}
 
 
-if [ -d /media/rene/TOSHIBA\ EXT/git ]; then # { git_local_repo_dir, hd_mount_point
+if [ -d /media/rene/TOSHIBA\ EXT/git ]; then #_{ git_local_repo_dir, hd_mount_point
   . ~/.tq84-dotfile-log .bashrc "/media/rene/TOSHIBA EXT/git exists, exporting hd_mount_point"
   export hd_mount_point=/media/rene/TOSHIBA\ EXT/
 elif [ -d /mnt/E/git ]; then # T420
@@ -161,19 +161,20 @@ elif [ -d /cygdrive/f/git ]; then
 elif [ -d /cygdrive/x/git ]; then
   . ~/.tq84-dotfile-log .bash_rc "/cygdrive/x/git exists, exporting hd_mount_point"
   export hd_mount_point=/cygdrive/x/git/
-fi # }
+fi #_}
 
 export git_local_repo_dir=${hd_mount_point}git/
 
-# 2018-01-31: Oracle {
+#_{ 2018-01-31: Oracle
 if [ "$ORACLE_HOME" ]; then
   . ~/.tq84-dotfile-log .bashrc "ORACLE_HOME exists setting some aliases"
 
   alias sqlplus="rlwrap -r sqlplus "
   alias diag="cd $ORACLE_BASE/diag/rdbms/$ORACLE_UNQNAME/$ORACLE_SID/trace"
 
-fi # }
-if command -v R > /dev/null; then # {
+fi #_}
+
+if command -v R > /dev/null; then #_{
   . ~/.tq84-dotfile-log .bashrc "R executable found"
   r() {
     if [[ -z "$1" ]]; then
@@ -185,11 +186,11 @@ if command -v R > /dev/null; then # {
     fi
   }
 
-fi # }
+fi #_}
 
-# shopt {
+#_{ shopt
 
-# Ignore case of files in shell {
+#_{ Ignore case of files in shell
 #   http://unix.stackexchange.com/a/48773/6479
 shopt -s nocaseglob
 # same thing in
@@ -197,7 +198,7 @@ shopt -s nocaseglob
 #     set +o case-glob
 #   zsh:
 #     unsetopt CASE_GLOB
-# }
+#_}
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -216,14 +217,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# }
 
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
-# }
+#_}
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -233,7 +233,7 @@ fi
 # ?     debian_chroot=$(cat /etc/debian_chroot)
 # ? fi
 
-# { History
+#_{ History
 
 export HISTIGNORE='*TQ84*'
 
@@ -247,26 +247,26 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# }
+#_}
 
-if   [ "$(uname)" == "Darwin" ]; then # { Mac OS
+if   [ "$(uname)" == "Darwin" ]; then #_{ Mac OS
     :
 
-# }
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
+#_}
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then #_{
 
   alias v='gvim'
 
 # 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
-  if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then # { key -> change-layout.sh
+  if [ -e ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh ]; then #_{ key -> change-layout.sh
     alias key='${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh'
 #   ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh
   else
     echo ${github_root}PostLinuxInstallation/keyboard/X/change-layout.sh does not exist!
-  fi # }
+  fi #_}
 
-# }
-# elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then # { MSYS
+#_}
+# elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then #_{ MSYS
 # 2016-12-28: Is this elif (MINGW32_NT) still useful?
 #
 #      # ----- Windows NT platform.
@@ -279,8 +279,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
 #
 #      export TERM=msys
 #
-# # }
-elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
+# #_}
+elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then #_{
 
     . ~/.tq84-dotfile-log .bashrc "uname -o is $(uname -o), special processing for cygwin or msys, \$OSTYPE=$OSTYPE"
  
@@ -302,22 +302,22 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then # {
    alias pc='dospath > /dev/clipboard'
    alias c:='cd /cygdrive/c'
 
-   if [ "$(uname -o)" == "Msys"   ]; then # {
+   if [ "$(uname -o)" == "Msys"   ]; then #_{
       #
       #  Set MSYS variable to llow to create symbolic links in msys.
       #  Apparently, in order for this to work, it requires elevated mode.
       #
         export MSYS=winsymlinks:nativestrict 
 
-   fi # }
-   if [ "$(uname -o)" == "Cygwin" ]; then # {
+   fi #_}
+   if [ "$(uname -o)" == "Cygwin" ]; then #_{
      alias gvim='gvim -u ~/.vim/vimrc'
      export DISPLAY=:0.0
-   fi # }
+   fi #_}
 
-fi # }
+fi #_}
 
-# Alias {
+#_{ Alias
 
 alias ls='ls --color=auto'
 alias ll='ls -lFh'
@@ -343,14 +343,15 @@ alias rs='Rscript'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# }
-# Functions {
+#_}
 
-function fb() { # http://unix.stackexchange.com/questions/278732/is-there-a-standard-abbreviation-for-find-name-foo-or-do-i-need-a-function
+#_{ Functions
+
+function fb() { #_{ http://unix.stackexchange.com/questions/278732/is-there-a-standard-abbreviation-for-find-name-foo-or-do-i-need-a-function
   find . -iname "$1"
-} # }
+} #_}
 
-function mdcd() { # mkdir and cd into it
+function mdcd() { #_{ mkdir and cd into it
   dir=$1
 
   if [ -e "$dir" ]; then
@@ -360,9 +361,9 @@ function mdcd() { # mkdir and cd into it
 
   mkdir "$dir"
   cd    "$dir"
-} # }
+} #_}
 
-akw() { # {
+akw() { #_{
 
 #
 #  Prints the indicated fields that is seperated by whitespaces
@@ -384,9 +385,9 @@ akw() { # {
       echo "$STDIN" | awk "{ print $field_nos }";
   done;
 
-} # }
+} #_}
 
-function vwh() { # view (executable) script
+function vwh() { #_{ view (executable) script
   local f=$(which $1)
   if [ ! -f "$f" ]; then
      echo "File $f does not exist"
@@ -394,9 +395,9 @@ function vwh() { # view (executable) script
   fi
 
   v "$f"
-} # }
+} #_}
 
-removeLastPartOfPath() { # {
+removeLastPartOfPath() { #_{
 
   # If READLINE_LINE ends on something like $SOMETHING/foo/bar/baz
   # $SOMETHING/foo/bar is assigned to READLINE_LINE.
@@ -409,9 +410,9 @@ removeLastPartOfPath() { # {
   if [[ $READLINE_LINE =~ (.*)/ ]]; then
      READLINE_LINE="${BASH_REMATCH[1]}/"
   fi
-} # }
+} #_}
 
-# Trying to bind ctlr-q to removeLastPartOfPath {
+#_{ Trying to bind ctlr-q to removeLastPartOfPath
 # 
 #     ctrl-q is used by the tty for flow control (xon/xoff).
 #     I couldn't care less (at least momentarely), so
@@ -422,16 +423,16 @@ stty -ixon
 
 bind -x '"\C-q": removeLastPartOfPath'
 
-# }
+#_}
 
-# }
+#_}
 
 #    https://stackoverflow.com/a/821226/180275
 # bind TAB:insert-completions
 #    default seems to be
 # bin TAB:complete
 
-# { Arch Linux CPAN nuisance:
+#_{ Arch Linux CPAN nuisance:
 
 if [[ $(hostname) == 'L1' ]]; then
 
@@ -443,4 +444,4 @@ if [[ $(hostname) == 'L1' ]]; then
    PERL_MB_OPT="--install_base \"/home/rene/perl5\""; export PERL_MB_OPT;
    PERL_MM_OPT="INSTALL_BASE=/home/rene/perl5"; export PERL_MM_OPT;
 
-fi # }
+fi #_}

@@ -119,7 +119,13 @@ if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
   fi 
 
 fi 
-# best privacy
-umask 077
+
+if [ $EUID != 0 ]; then
+  # best privacy
+  lfs_log .profile "Setting umask to 077, was $(umask) for non root user $EUID"
+  umask 077
+else
+  lfs_log .profile "Setting umask to 022, was $(umask) for root user $EUID"
+fi
 
 true
