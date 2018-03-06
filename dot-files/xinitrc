@@ -42,6 +42,17 @@ fi
 # https://wiki.archlinux.org/index.php/openbox
 # https://wiki.archlinux.org/index.php/Xinit
 
+# _{ Starting programs 
+#
+#    'man xinit': An important point is that programs which are
+#    run by .xinitrc should be run in the background if they do
+#    not exit right away, so that they don't prevent other programs
+#    from starting up.
+#    However, the last long lived program started (usually a window
+#    manager or terminal emulator) shuld be left in the foreground
+#    so that script won't exit (which indicates that the user is
+#    done and that xinit should exit)
+#
 xscreensaver                        &
 xsetroot      -cursor_name left_ptr &
 
@@ -60,9 +71,15 @@ xsetroot      -cursor_name left_ptr &
 #
 # volumeicon                        &
 
+
+#
+#  Starting the »long lived« program.
+#  This is usually a window manager or a terminal emulator.
 #
 #  Note: specifying »exec openbox« instead of
 #       »exec openbox-session« will prevent autostart
 #        in /etc/xdg/autostart
 #
 exec openbox-session
+
+#_}
