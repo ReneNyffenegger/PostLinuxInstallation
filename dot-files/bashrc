@@ -71,7 +71,7 @@ check_color_support() { #_{
   fi
   . ~/.tq84-dotfile-log .bashrc "check_color_support: max=$max, min=$min"
 
-  if [[ $max -ge 8 ]]; then
+  if [[ $max -gt 8 ]]; then
     return 0
   else
     return 1
@@ -84,7 +84,7 @@ if check_color_support; then #_{
 
   color_normal="\e[0m"
   color_red="\e[1;31m"
-  color_green="\e[1;32m"
+  color_green="\e[0;32m"  # darker version of green
   color_yellow="\e[0;33m" # dark version of yellow
   color_cyan="\e[1;36m"
 
@@ -123,6 +123,8 @@ if check_color_support; then #_{
    color_user_P=""
    if [[ $EUID == 0 ]]; then
      color_user_P=$color_red_P
+   else
+     color_user_P=$color_green_P
    fi
    PS1=""
    PS1="$PS1${color_user_P}\u"                       # Username
