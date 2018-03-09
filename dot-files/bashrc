@@ -112,7 +112,7 @@ if check_color_support; then #_{
 #     fi
 #   }
 
- # The contents of PROMPT_COMMAND is executed as a regular Bash command just before Bash displays a prompt. 
+ # The contents of PROMPT_COMMAND is executed as a regular Bash command just before Bash displays a prompt.
    PROMPT_COMMAND=prompt_check_exit_value
 
  # Enclose zero length color specifiers with \[ … \] ( https://unix.stackexchange.com/a/28828/6479 )
@@ -163,7 +163,7 @@ export_var_if_dir_exists ~/renenyffenegger.ch/  rn_root
 # q else
 # q   . ~/.tq84-dotfile-log .bashrc "${github_top_root}lib/scripts does not exist"
 # q fi #_}
-# q 
+# q
 # q if [ -d ~/localgit/scripts ]; then #_{ add ~/localgit/scripts to PATH
 # q   export PATH=~/localgit/scripts:$PATH
 # q fi #_}
@@ -255,19 +255,21 @@ fi
 
 #_{ History
 
-export HISTIGNORE='*TQ84*'
+if [ $EUID -ne 0 ]; then #_{ History settings. root should not use a history
+  lfs_log .bashrc "\$EUDI = $EUDI, Apply history settings"
+  export HISTIGNORE='*TQ84*'
 
-# Don't put duplicate lines or lines starting with space in the history.
-# Apparently, more options would be possible.
-export HISTCONTROL=ignoreboth
+  # Don't put duplicate lines or lines starting with space in the history.
+  # Apparently, more options would be possible.
+  export HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
+  # append to the history file, don't overwrite it
+  shopt -s histappend
 
-HISTSIZE=1000
-HISTFILESIZE=2000
+  HISTSIZE=1000
+  HISTFILESIZE=2000
 
-#_}
+fi #_}
 
 if   [ "$(uname)" == "Darwin" ]; then #_{ Mac OS
     :
@@ -303,7 +305,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then #_{
 elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then #_{
 
     . ~/.tq84-dotfile-log .bashrc "uname -o is $(uname -o), special processing for cygwin or msys, \$OSTYPE=$OSTYPE"
- 
+
 #  TODO
 #    Compare condition above with
 #       if [[ $OSTYPE == *cygwin* ]]; then
@@ -327,7 +329,7 @@ elif [ "$(uname -o)"  == "Cygwin" ] || [ "$(uname -o)" == "Msys" ]; then #_{
       #  Set MSYS variable to llow to create symbolic links in msys.
       #  Apparently, in order for this to work, it requires elevated mode.
       #
-        export MSYS=winsymlinks:nativestrict 
+        export MSYS=winsymlinks:nativestrict
 
    fi #_}
    if [ "$(uname -o)" == "Cygwin" ]; then #_{
@@ -400,7 +402,7 @@ akw() { #_{
   field_nos=$( echo "$field_nos" | sed 's/ / \" \" /g' )
 
   echo field_nos=$field_nos
-  
+
   while read STDIN; do
       echo "$STDIN" | awk "{ print $field_nos }";
   done;
@@ -433,7 +435,7 @@ removeLastPartOfPath() { #_{
 } #_}
 
 #_{ Trying to bind ctlr-q to removeLastPartOfPath
-# 
+#
 #     ctrl-q is used by the tty for flow control (xon/xoff).
 #     I couldn't care less (at least momentarely), so
 #     flow control is turned off (stty -ixon) in order to make it possible
@@ -457,7 +459,7 @@ bind -x '"\C-q": removeLastPartOfPath'
 if [[ $(hostname) == 'L1' ]]; then
 
    . ~/.tq84-dotfile-log .bashrc "hostname=L1, doing the Arch Linux CPAN nuisance"
-   
+
    PATH="/home/rene/perl5/bin${PATH:+:${PATH}}"; export PATH;
    PERL5LIB="/home/rene/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
    PERL_LOCAL_LIB_ROOT="/home/rene/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
