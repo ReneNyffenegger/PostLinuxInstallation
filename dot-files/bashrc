@@ -6,7 +6,7 @@
 #
 . ~/.tq84-dotfile-sequence .bashrc
 
-. ~/.tq84-dotfile-log .bashrc: "\$- = $-" # >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc "\$- = $-" # >> ~/.dotfile-sequence.log
 
 
 if [[ "$-" != *i* ]]; then #_{ Check for interactive execution
@@ -39,7 +39,7 @@ set -o vi
 # PS1 {
 # username @ hostname
 
-. ~/.tq84-dotfile-log .bashrc: \$TERM=$TERM # >> ~/.dotfile-sequence.log
+. ~/.tq84-dotfile-log .bashrc \$TERM=$TERM # >> ~/.dotfile-sequence.log
 case "$TERM" in
 # 2018-02-22  xterm-color|*-256color) color_prompt=yes;;
                     xterm|*-256color) color_prompt=yes;;
@@ -228,7 +228,7 @@ shopt -s checkwinsize
 
 # Enable programmable completion features {
 #
-#   Possible already enabled through /etc/bash.bashrc or
+#   TODO: Possibly already enabled through /etc/bash.bashrc or
 #   /etc/profile
 
 if ! shopt -oq posix; then
@@ -258,7 +258,7 @@ fi
 #_{ History
 
 if [ $EUID -ne 0 ]; then #_{ History settings. root should not use a history
-  lfs_log .bashrc "\$EUDI = $EUDI, Apply history settings"
+  . ~/.tq84-dotfile-log .bashrc "\$EUID = $EUID, apply history settings"
   export HISTIGNORE='*TQ84*'
 
   # Don't put duplicate lines or lines starting with space in the history.
