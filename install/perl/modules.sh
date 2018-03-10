@@ -37,4 +37,8 @@ install_module() {
 # install_module Net::FTP::File            todo
 # install_module LWP::Protocoll::https     perl-lwp-protocol-https  # TODO: apparently already installed on Ubuntu...
 # install_module Yaml::Tiny                perl-yaml-tiny           # TODO: apparently already installed on Ubuntu...
-install_module Archive::Extract          todo
+# install_module Archive::Extract          perl-archive-extract
+# install_module HTTP::BrowserDetect       yaourt perl-browserdetect
+# install_module Net::DNS::Resolver        cpan
+# install_module Geo::IP                   yaourt perl-geo-ip
+# install_module PerlIO::gzip'             todo perl-geo-ip
