@@ -1,0 +1,62 @@
+#
+# twm startup files consist of three types
+# of specifications: variables, bindings, menus
+#
+# Variables
+#   The variable section describes fonts, colors,
+#   cursors, border widths, icon and window placement,
+#   highlighting, autoraising, layout of titles,
+#   warping and use of icon manager
+#
+#   Of the three specification types, the variable
+#   section must come first
+#
+#
+
+# AutoRaise {
+#   "xterm" "firefox"
+# }
+
+BorderWidth 1
+
+
+Color {
+# See https://en.wikipedia.org/wiki/X11_color_names for color names.
+  BorderColor     "Gray85" {
+    "xterm" "Indigo" 
+  }
+}
+
+NoTitle {
+  "xclock"
+}
+
+# Bindings
+#   The bindings section specifies the functions
+#   to be invoked when keyboard and mouse is used
+#   in windows, icons, titles and frames.
+
+Function "move-or-raise" { f.move f.deltastop f.raise }
+
+Button1 = : root  : f.menu "main"
+Button1 = : title : f.function "move-or-raise"
+
+# Menus
+#   For user defined menues.
+
+menu "main" {
+# "Twm       " f.title
+  "Show Iconmgr " f.showiconmgr
+  "Hide iconmgr " f.hideiconmgr
+  "Apps      " f.menu "apps"
+  "Restart   " f.restart
+}
+
+menu "apps" {
+  "Apps"           f.title
+   #
+   # Apparently, f.exec could be abbreviated with an exclamation mark
+   # 
+  "xterm"          f.exec "xterm -ls -bg black -fg gray -geometry 100x60+700+50 &"
+  "firefox"        f.exec "firefox &"
+}

@@ -19,3 +19,4 @@ mklink ls_colors
 
 mklink xinitrc
 mklink Xresources
+mklink twmrc
