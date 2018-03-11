@@ -1,6 +1,6 @@
 !
 ! 2018-02-16 : source this file with
-!   it's now :     #include "${github_root}PostLinuxInstallation/dot-files/Xresources"
+!   it is now:     #include "${github_root}PostLinuxInstallation/dot-files/Xresources"
 !  symlinked : in ~/.Xresource
 ! 
 
@@ -15,7 +15,8 @@ XTerm*geometry: 255x50+10+10
 XTerm*saveLines: 20000
 ! Xterm*scrollBar: on
 XTerm*rightScrollBar: true
-XTerm*ScrollBar: true
+! scrollBar or ScrollBar ?
+XTerm*scrollBar: true
 XTerm*foreground: rgb:ff/e5/c3
 XTerm*background: rgb:00/00/00
 
