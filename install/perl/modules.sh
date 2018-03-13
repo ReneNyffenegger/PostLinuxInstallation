@@ -3,6 +3,7 @@
 #
 
 distro=$(../../determine-distro.sh)
+umask 022
 
 if command -v make > /dev/null; then
    echo make is installed
@@ -30,6 +31,7 @@ install_module() {
 }
 
 # install_module Digest::MD5::File         todo
+# install_module File::Copy                todo
 # install_module File::Which               todo
 # install_module File::HomeDir             todo
 # install_module File::Touch               todo
