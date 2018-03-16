@@ -30,6 +30,8 @@ install_module() {
      
 }
 
+# install_module DBI                       perl-dbi
+# install_module DBD::SQLite               perl-dbi-sqlite
 # install_module Digest::MD5::File         todo
 # install_module File::Copy                todo
 # install_module File::Which               todo
