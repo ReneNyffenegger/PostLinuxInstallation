@@ -449,7 +449,14 @@ bind -x '"\C-q": removeLastPartOfPath'
 
 #_}
 
+insertDate() {
+  READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$(date -I)${READLINE_LINE:$READLINE_POINT}"
+  READLINE_POINT=$(expr $READLINE_POINT + 10)
+}
+
 #_}
+
+bind -x '",indt": insertDate'
 
 #    https://stackoverflow.com/a/821226/180275
 # bind TAB:insert-completions
@@ -458,7 +465,7 @@ bind -x '"\C-q": removeLastPartOfPath'
 
 #_{ Arch Linux CPAN nuisance:
 
-if [[ $(hostname) == 'L1' ]]; then
+if [[ $(hostname) == 'L1' ]]; then #_{
 
    . ~/.tq84-dotfile-log .bashrc "hostname=L1, doing the Arch Linux CPAN nuisance"
 
