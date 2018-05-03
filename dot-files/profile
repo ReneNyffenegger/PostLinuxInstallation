@@ -1,4 +1,4 @@
-# vim: ft=sh
+# vim: ft=sh foldmarker=_{,_}
 
 . ~/.tq84-dotfile-sequence .profile
 
@@ -10,7 +10,7 @@
 
 . ~/.tq84-dotfile-log .profile "\$SHELL=$SHELL"
 
-# { Environment variables
+#_{ Environment variables
 export TZ=Europe/Zurich
 
 if   command -v gvim > /dev/null; then export EDITOR='gvim --nofork'
@@ -20,18 +20,18 @@ fi
 . ~/.tq84-dotfile-log .profile "EDITOR=$EDITOR"
 
 
-if [[ -d ~/github ]]; then # {
+if [[ -d ~/github ]]; then #_{ github_top_root
    export github_top_root=~/github/
    export github_root=${github_top_root}github/
    . ~/.tq84-dotfile-log .profile "github_top_root=$github_top_root, github_root=$github_root"
-fi # }
+fi #_}
 
-if [ -d ${github_root}vim/runtime ]; then # { VIMRUNTIME
+if [ -d ${github_root}vim/runtime ]; then #_{ VIMRUNTIME
   export VIMRUNTIME=${github_root}vim/runtime
   . ~/.tq84-dotfile-log .profile "exported VIMRUNTIME=$VIMRUNTIME"
-fi # }
+fi #_}
 
-# { PATH
+#_{ PATH
 
 if [ -d ${github_top_root}lib/scripts ]; then # {
   . ~/.tq84-dotfile-log .profile "${github_top_root}lib/scripts exists, adding it to PATH"
@@ -50,30 +50,44 @@ fi # }
 
   . ~/.tq84-dotfile-log .profile "PATH=$PATH"
 
-# }
 
-# }
+#_{ Arch Linux CPAN nuisance:
+
+if [[ $(hostname) == 'L1' ]]; then #_{
+
+   . ~/.tq84-dotfile-log .bashrc "hostname=L1, doing the Arch Linux CPAN nuisance"
+
+   PATH="/home/rene/perl5/bin${PATH:+:${PATH}}"; export PATH;
+   PERL5LIB="/home/rene/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+   PERL_LOCAL_LIB_ROOT="/home/rene/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+   PERL_MB_OPT="--install_base \"/home/rene/perl5\""; export PERL_MB_OPT;
+   PERL_MM_OPT="INSTALL_BASE=/home/rene/perl5"; export PERL_MM_OPT;
+
+fi #_}
+
+#_}
+
+#_}
 
 . ~/.tq84-dotfile-log .profile "\$BASH=$BASH"
-if [ "$BASH" ] && [ -f ~/.bashrc ]; then # {
+if [ "$BASH" ] && [ -f ~/.bashrc ]; then #_{
     . ~/.tq84-dotfile-log .profile "It's a bash and ~/.bashrc exists, so sourcing it"
     . ~/.bashrc
-fi # }
+fi #_}
 
-
-if [ -r ~/.ls_colors ]; then # {
+if [ -r ~/.ls_colors ]; then #_{
   . ~/.tq84-dotfile-log .profile "~/.ls_colors is readable, so sourcing it"
   . ~/.ls_colors
 else
   . ~/.tq84-dotfile-log .profile "~/.ls_colors is NOT readable"
-fi # }
+fi #_}
 
-if [ -d /u01/app/oracle ]; then # 2018-01-31 { Oracle
+if [ -d /u01/app/oracle ]; then #_{ 2018-01-31 - Oracle
 
   export ORACLE_BASE=/u01/app/oracle
   . ~/.tq84-dotfile-log .profile "/u01/app/oracle exists, exporting ORACLE_BASE=$ORACLE_BASE"
 
-  if [ -d $ORACLE_BASE/product/*/*1 ]; then # {
+  if [ -d $ORACLE_BASE/product/*/*1 ]; then #_{
 
 #    export ORACLE_HOME=($ORACLE_BASE/product/*/*1)  # Parentheses used in order to expand the stars: https://stackoverflow.com/a/104023/180275
      export ORACLE_HOME=$(ls -1d $ORACLE_BASE/product/*/*1)
@@ -93,12 +107,11 @@ if [ -d /u01/app/oracle ]; then # 2018-01-31 { Oracle
      else
          . ~/.tq84-dotfile-log .profile "$github_root/oracle_scriptlets/sqlpath does not exist"
      fi
-  fi # }
+  fi #_}
 
-fi # }
+fi #_}
 
-
-if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
+if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then #_{
 # 2017-07-23: Don't try to load change-layout if running cygwin - only if running Linux.
 
   if [ ! -z "$XTERM" ]; then
@@ -118,14 +131,14 @@ if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # {
     . ~/.tq84-dotfile-log .profile "XTERM not set, not running change-layout.sh"
   fi 
 
-fi 
+fi #_}
 
-if [ $EUID != 0 ]; then
+if [ $EUID != 0 ]; then #_{ Setting umask depending on EUID
   # best privacy
   . ~/.tq84-dotfile-log .profile "Setting umask to 077, was $(umask) for non root user $EUID"
   umask 077
 else
   . ~/.tq84-dotfile-log .profile "Setting umask to 022, was $(umask) for root user $EUID"
-fi
+fi #_}
 
 true
