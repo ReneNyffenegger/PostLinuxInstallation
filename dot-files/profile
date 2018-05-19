@@ -44,6 +44,11 @@ if [ -d ~/localgit/scripts ]; then # { add ~/localgit/scripts to PATH
   export PATH=~/localgit/scripts:$PATH
 fi # }
 
+if [ -r ~/localgit/scripts/profile ]; then
+  . ~/.tq84-dotfile-log .profile "~/localgit/scripts/profile exists"
+  . ~/localgit/scripts/profile
+fi
+
 if [ -d "$HOME/bin" ] ; then # {
     PATH="$HOME/bin:$PATH"
 fi # }
